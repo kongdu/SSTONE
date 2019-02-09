@@ -28,6 +28,10 @@ namespace TMI
 
         public void PopMonster(int mobjencount)
         {
+            if (mobjencount >= monsterPool.Count)
+            {
+                return;
+            }
             for (int i = 0; i < mobjencount; i++)
             {
                 int MCZIndex = i % MonsterCreateZone.Length;
