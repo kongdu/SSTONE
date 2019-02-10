@@ -1,66 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
 
 namespace TMI
 {
-    public class ObjPool<T> where T : class
+    public class ObjPool<T>
     {
-        private int count;
-
-        public delegate T Func();
-
-        // 호출할떄 받은 생성함수
-        private Func createFuntion;
+        private int allocateCountPerOnce;
+        private Func<T> CreateFuntion;
 
         private Stack<T> objects;
 
-        public ObjPool(int count, Func fn)
-
+        /// <summary>
+        /// 생성한오브젝트들이 들어있는 스택
+        /// </summary>
+        /// <param name="allocateCountPerOnce"></param>
+        /// <param name="CreateFuntion"></param>
+        public ObjPool(int allocateCountPerOnce, Func<T> CreateFuntion)
         {
-            this.count = count;
+            this.allocateCountPerOnce = allocateCountPerOnce;
+            this.CreateFuntion = CreateFuntion;
 
-            this.createFuntion = fn;
+            this.objects = new Stack<T>(this.allocateCountPerOnce);
 
-            this.objects = new Stack<T>(this.count);
-
-            allocate();
+            Allocate();
         }
 
-        private void allocate()
-
+        private void Allocate()
         {
-            for (int i = 0; i < this.count; ++i)
-
-            {
-                //할당이야
-                //스택안에푸시한다.(함수리턴값 푸시)
-
-                this.objects.Push(this.createFuntion());
-            }
+            for (int i = 0; i < allocateCountPerOnce; ++i)
+                objects.Push(CreateFuntion());
         }
 
-        //팝
-        public T pop()
-
+        public T Pop()
         {
-            //스택안의 카운트가 0이하라면
+            // 스택에 오브젝트가 없으면, 새로 할당
             if (this.objects.Count <= 0)
+                Allocate();
 
-            {
-                //할당();
-                allocate();
-            }
-            //0 이상이면 스택에서팝한결과를 리턴
-            return this.objects.Pop();
+            return objects.Pop();
         }
 
-        public void push(T obj)
-
+        public void Push(T obj)
         {
-            //매개변수로 받은 오브젝트 스택안에 푸시
-            this.objects.Push(obj);
+            
+            objects.Push(obj);
         }
     }
 }

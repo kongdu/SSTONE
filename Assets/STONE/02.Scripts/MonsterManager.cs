@@ -6,40 +6,20 @@ namespace TMI
 {
     public class MonsterManager : MonoBehaviour
     {
-        [SerializeField]
-        private List<GameObject> monsterPool;
+        ObjPoolManager objPoolManager;
 
-        [SerializeField]
-        private List<GameObject> activatedMonster;
-
-        private const int maxCount = 1000;
-        public GameObject MonsterPreFab;
-        public Transform[] MonsterCreateZone;
-
-        private void Awake()
+        public Transform[] monsterGeneratezone;
+                
+        IEnumerator GenerateMonster(int duration)
         {
-            for (int i = 0; i < maxCount; i++)
+            for (int i = 0; i < duration; i++)
             {
-                var monster = GameObject.Instantiate(MonsterPreFab);
-                monsterPool.Add(monster);
-                monster.SetActive(false);
+                int spwanpoint = i % monsterGeneratezone.Length;
+                var monster = ObjPoolManager.instance.monsterPool.Pop();
+                monster.transform.position = monsterGeneratezone[spwanpoint].transform.position;
+                monster.SetActive(true);
+                yield return new WaitForSeconds(1f);
             }
-        }
-
-        public void PopMonster(int mobjencount)
-        {
-            if (mobjencount >= monsterPool.Count)
-            {
-                return;
-            }
-            for (int i = 0; i < mobjencount; i++)
-            {
-                int MCZIndex = i % MonsterCreateZone.Length;
-                monsterPool[i].transform.position = MonsterCreateZone[MCZIndex].transform.position;
-                activatedMonster.Add(monsterPool[i].gameObject);
-                activatedMonster[i].SetActive(true);
-            }
-            monsterPool.RemoveRange(0, mobjencount);
         }
     }
 }
