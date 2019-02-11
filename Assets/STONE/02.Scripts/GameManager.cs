@@ -7,6 +7,5 @@ namespace TMI
 {
     public class GameManager : MonoBehaviour
     {
-        
     }
 }
