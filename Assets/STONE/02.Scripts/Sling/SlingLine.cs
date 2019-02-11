@@ -9,7 +9,7 @@ public class SlingLine : Singleton<SlingLine>
 
     private LineRenderer[] lineRenderers;
 
-    public Func<SpringJoint> Findjoint => () => joint = FindObjectOfType<SpringJoint>();
+    public Func<SpringJoint> Findjoint => () => { return joint = FindObjectOfType<SpringJoint>(); };
 
     private Action FindLines => () => lineRenderers = FindObjectsOfType<LineRenderer>();
 
@@ -29,8 +29,6 @@ public class SlingLine : Singleton<SlingLine>
         MethodChain(LastLineRend, true);
     }
 
-
-
     private void Update()
     {
         SlinglinePos?.Invoke();
@@ -44,11 +42,13 @@ public class SlingLine : Singleton<SlingLine>
         if (flag) SlinglinePos += action;
         else SlinglinePos -= action;
     }
+
     private void InitialLineRend()
     {
         foreach (var item in lineRenderers)
             item.SetPosition(0, item.transform.position);
     }
+
     private void LastLineRend()
     {
         foreach (var item in lineRenderers)
