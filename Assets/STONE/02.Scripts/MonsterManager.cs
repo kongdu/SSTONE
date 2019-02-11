@@ -6,20 +6,16 @@ namespace TMI
 {
     public class MonsterManager : MonoBehaviour
     {
-        ObjPoolManager objPoolManager;
+        public MonsterSpawner monsterSpawner;
 
-        public Transform[] monsterGeneratezone;
-                
-        IEnumerator GenerateMonster(int duration)
+        private void Start()
         {
-            for (int i = 0; i < duration; i++)
-            {
-                int spwanpoint = i % monsterGeneratezone.Length;
-                var monster = ObjPoolManager.instance.monsterPool.Pop();
-                monster.transform.position = monsterGeneratezone[spwanpoint].transform.position;
-                monster.SetActive(true);
-                yield return new WaitForSeconds(1f);
-            }
+            MonsterGen(50, 1f);
+        }
+
+        public void MonsterGen(int generatecount, float timelag)
+        {
+            StartCoroutine(monsterSpawner.GenerateMonster(generatecount, timelag));
         }
     }
 }

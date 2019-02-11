@@ -7,7 +7,8 @@ namespace TMI
     public class ObjPool<T>
     {
         private int allocateCountPerOnce;
-        private Func<T> CreateFuntion;
+        private Func<T> CreateFunction;
+        private Action<T> ActiveFunction;
 
         private Stack<T> objects;
 
@@ -16,11 +17,14 @@ namespace TMI
         /// </summary>
         /// <param name="allocateCountPerOnce"></param>
         /// <param name="CreateFuntion"></param>
-        public ObjPool(int allocateCountPerOnce, Func<T> CreateFuntion)
+        public ObjPool(int allocateCountPerOnce, Func<T> CreateFuntion, Action<T> ActiveFunction = null)
         {
             this.allocateCountPerOnce = allocateCountPerOnce;
-            this.CreateFuntion = CreateFuntion;
-
+            this.CreateFunction = CreateFuntion;
+            if (ActiveFunction != null)
+            {
+                this.ActiveFunction = ActiveFunction;
+            }
             this.objects = new Stack<T>(this.allocateCountPerOnce);
 
             Allocate();
@@ -29,7 +33,7 @@ namespace TMI
         private void Allocate()
         {
             for (int i = 0; i < allocateCountPerOnce; ++i)
-                objects.Push(CreateFuntion());
+                objects.Push(CreateFunction());
         }
 
         public T Pop()
@@ -37,14 +41,16 @@ namespace TMI
             // 스택에 오브젝트가 없으면, 새로 할당
             if (this.objects.Count <= 0)
                 Allocate();
+            var obj = objects.Pop();
+            ActiveFunction(obj);
 
-            return objects.Pop();
+            return obj;
         }
 
         public void Push(T obj)
         {
-            
             objects.Push(obj);
+            ActiveFunction(obj);
         }
     }
 }
