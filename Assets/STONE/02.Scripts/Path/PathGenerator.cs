@@ -10,11 +10,21 @@ namespace TMI
         [SerializeField]
         public List<Pathlist> pathlist;
 
-        // 리스트에서 순서대로 랜덤한 값 추출해서 새로운 리스트를 만드는 기능
-        public IEnumerator<Transform> GetPath()
+        public PathDataBase pathDataBase;
+
+        /// <summary>
+        /// 랜덤경로만들어서 PathDataBase의 pathlist에다가 이터레이터형태로 집어넣음
+        /// </summary>
+        /// <param name="times">만들어낼 경로의 수</param>
+        public void GetPath(int times)
         {
-            var path = CreateIterator(RandomPathGenerater(pathlist));
-            return path;
+            pathDataBase = new PathDataBase();
+            // 경로데이타베이스만들고 경로 생성될때마다 리스트 업시킴
+            for (int i = 0; i < times; i++)
+            {
+                var path = CreateIterator(RandomPathGenerater(pathlist));
+                pathDataBase.pathlist.Add(path);
+            }
         }
 
         private List<Transform> RandomPathGenerater(List<Pathlist> pathlist)
