@@ -5,29 +5,29 @@ using System;
 
 namespace TMI
 {
-    public class State : MonoBehaviour
+    public class State<T, M> where T : Monster
+                             where M : GameManager
     {
-        protected StateMachine stateMachine;
-        protected Monster monster;
-        protected MonsterDataBase monsterDataBase;
+        protected StateMachine<Monster, GameManager> stateMachine;
+        protected Monster owner;
+        protected Monster.Info info;
 
-        public virtual void Initialize()
+        public virtual void Initialize(Monster tt)
         {
-            stateMachine = gameObject.GetComponent<StateMachine>();
-            monster = gameObject.GetComponent<Monster>();
-            monsterDataBase = gameObject.GetComponent<MonsterDataBase>();
+            owner = tt;
+            info = owner.info;
+            stateMachine = owner.stateMachine;
         }
 
         public virtual void Enter()
         {
-            stateMachine = gameObject.GetComponent<StateMachine>();
         }
 
         public virtual void Run()
         {
         }
 
-        public virtual string ChangeState()
+        public virtual string NextStatekey()
         {
             return null;
         }

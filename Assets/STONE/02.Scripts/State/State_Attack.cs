@@ -4,16 +4,18 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class State_Attack : State_Move
+    public class State_Attack<T, M> : State<T, M>
+                    where T : Monster where M : GameManager
     {
-        public State_Attack()
+        public State_Attack(T owner)
         {
-            base.Initialize();
+            Initialize(owner);
         }
 
         public override void Enter()
         {
             Debug.Log("어택엔터");
+            stateMachine.NextState(NextStatekey);
         }
 
         public override void Run()
@@ -21,9 +23,9 @@ namespace TMI
             base.Run();
         }
 
-        public override string ChangeState()
+        public override string NextStatekey()
         {
-            return ChangeState();
+            return "Damaged";
         }
 
         public override void Exit()

@@ -5,44 +5,36 @@ using System;
 
 namespace TMI
 {
-    public class StateMachine : MonoBehaviour
+    public class StateMachine<T, M> where T : Monster
+                                                where M : GameManager
     {
-        public Dictionary<string, State> stateDictionary = new Dictionary<string, State>();
-        private State currentState = null;
+        public Dictionary<string, State<Monster, GameManager>> stateDictionary = new Dictionary<string, State<Monster, GameManager>>();
+        private State<Monster, GameManager> currentState = null;
 
-        private void Awake()
+        // 상태들을 딕셔너리에 등록하하고 첫번째 상태를 경로셋팅으로 만드는 과정
+
+        public void Initialize(Monster owner)
         {
-            stateDictionary.Add("Move", new State_Move());
-            stateDictionary.Add("Attack", new State_Attack());
-            stateDictionary.Add("Dead", new State_Dead());
-            stateDictionary.Add("Damaged", new State_Damaged());
-            stateDictionary.Add("PathSet", new State_PathSet());
+            stateDictionary.Add("Move", new State_Move<Monster, GameManager>(owner));
+            stateDictionary.Add("Attack", new State_Attack<Monster, GameManager>(owner));
+            stateDictionary.Add("Dead", new State_Dead<Monster, GameManager>(owner));
+            stateDictionary.Add("Damaged", new State_Damaged<Monster, GameManager>(owner));
+            stateDictionary.Add("PathSet", new State_PathSet<Monster, GameManager>(owner));
 
             if (currentState == null)
             {
                 if (stateDictionary.TryGetValue("PathSet", out currentState)) { };
             }
-            FindNextKeyValue();
-        }
-
-        //스테이트 바꾸면서 스테이트 실행
-        public void ChangeState(string nextKeyValue)
-        {
-            if (stateDictionary.TryGetValue(nextKeyValue, out currentState)) { };
             currentState.Enter();
         }
 
-        //추가될 기능을 위해 따로 빼놓은 함수
-        public void RunState(State currentState)
-        {
-            currentState.Run();
-        }
+        // 상태 바꾸기
 
-        //넘어갈 상태 키값을 뽑아내는 기능
-        public void FindNextKeyValue()
+        public void NextState(Func<string> a)
         {
-            string nextKeyValue = currentState.ChangeState();
-            ChangeState(nextKeyValue);
+            string keyValue = a();
+            if (stateDictionary.TryGetValue(keyValue, out currentState)) { };
+            currentState.Enter();
         }
     }
 }

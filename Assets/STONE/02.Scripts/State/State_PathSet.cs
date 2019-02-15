@@ -5,27 +5,36 @@ using System;
 
 namespace TMI
 {
-    public class State_PathSet : State
+    public class State_PathSet<T, M> : State<T, M> where T : Monster
+                                                where M : GameManager
     {
         private IEnumerator<Transform> path;
         private int gateWayNum;
 
-        public State_PathSet()
+        public State_PathSet(Monster owner)
         {
-            base.Initialize();
+            Initialize(owner);
         }
 
         public override void Enter()
         {
-            Debug.Log("1");
-            gateWayNum = monsterDataBase.gateWay;
-            Debug.Log("2");
+            Debug.Log("경로설정");
 
+            Debug.Log("1");
+            gateWayNum = info.gateWay;
+            Debug.Log("게이트웨이번호" + info.gateWay);
+            if (info.path != null)
+            {
+                info.path = null;
+            }
+            Debug.Log("패스초기화");
             path = SpwanPoints.instance.spwanPoints[gateWayNum].pathDataBase.pathlist[0];
-            Debug.Log("3");
+            info.path = this.path;
+            Debug.Log("패스셋");
+            stateMachine.NextState(NextStatekey);
         }
 
-        public override string ChangeState()
+        public override string NextStatekey()
         {
             return "Move";
         }
