@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace TMI
 {
+    [DefaultExecutionOrder(-700)]
     public class ObjPoolManager : MonoBehaviour
     {
         public static ObjPoolManager instance = null;
@@ -23,15 +24,22 @@ namespace TMI
             {
                 Destroy(gameObject);
             }
-            monsterPool = new ObjPool<GameObject>(maxCount, () => GameObject.Instantiate(monsterPrefab, this.transform.position, Quaternion.identity, this.transform),
-                                                 (GameObject some) =>
-                                                 {
-                                                     if (some.activeSelf == false)
-                                                     {
-                                                         some.SetActive(true);
-                                                     }
-                                                     else some.SetActive(false);
-                                                 });
+            monsterPool = new ObjPool<GameObject>(
+                maxCount,
+                () =>
+                {
+                    Debug.Log("생성");
+                    return GameObject.Instantiate(monsterPrefab, this.transform.position, Quaternion.identity, this.transform);
+                },
+                (GameObject some) =>
+                {
+                    if (some.activeSelf == false)
+                    {
+                        some.SetActive(true);
+                    }
+                    else some.SetActive(false);
+                }
+            );
         }
     }
 }

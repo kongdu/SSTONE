@@ -5,18 +5,15 @@ using System;
 
 namespace TMI
 {
-    public class State<T, M> where T : Monster
-                             where M : GameManager
-    {
-        protected StateMachine<Monster, GameManager> stateMachine;
-        protected Monster owner;
-        protected Monster.Info info;
+    public class State
 
-        public virtual void Initialize(Monster tt)
+    {
+        protected StateMachine stateMachine;
+        protected GameObject owner;
+
+        public virtual void Initialize(GameObject owner)
         {
-            owner = tt;
-            info = owner.info;
-            stateMachine = owner.stateMachine;
+            this.owner = owner;
         }
 
         public virtual void Enter()
@@ -27,9 +24,9 @@ namespace TMI
         {
         }
 
-        public virtual string NextStatekey()
+        public virtual StateIndex GetNextState()
         {
-            return null;
+            return StateIndex.PathSet;
         }
 
         public virtual void Exit()

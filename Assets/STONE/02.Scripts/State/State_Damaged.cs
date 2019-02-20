@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class State_Damaged<T, M> : State<T, M> where T : Monster
-                             where M : GameManager
+    public class State_Damaged : State
     {
-        public State_Damaged(T owner)
+        public State_Damaged(GameObject owner)
         {
             Initialize(owner);
         }
@@ -15,7 +14,7 @@ namespace TMI
         public override void Enter()
         {
             Debug.Log("공격당함");
-            stateMachine.NextState(NextStatekey);
+            stateMachine.NextState(StateIndex.Dead);
         }
 
         public override void Run()
@@ -23,9 +22,9 @@ namespace TMI
             base.Run();
         }
 
-        public override string NextStatekey()
+        public override StateIndex GetNextState()
         {
-            return "Dead";
+            return StateIndex.Dead;
         }
 
         public override void Exit()

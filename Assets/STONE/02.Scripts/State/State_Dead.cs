@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class State_Dead<T, M> : State<T, M> where T : Monster
-                             where M : GameManager
+    public class State_Dead : State
     {
-        public State_Dead(T owner)
+        public State_Dead(GameObject owner)
         {
             Initialize(owner);
         }
@@ -15,8 +14,9 @@ namespace TMI
         public override void Enter()
         {
             Debug.Log("죽음");
-            Debug.Log("공격으로");
-            stateMachine.NextState(NextStatekey);
+            Debug.Log("경로설정으로");
+            ObjPoolManager.instance.monsterPool.Push(owner.gameObject);
+            //stateMachine.NextState(GetNextState);
         }
 
         public override void Run()
@@ -24,9 +24,9 @@ namespace TMI
             Run();
         }
 
-        public override string NextStatekey()
+        public override StateIndex GetNextState()
         {
-            return "PathSet";
+            return StateIndex.PathSet;
         }
 
         public override void Exit()

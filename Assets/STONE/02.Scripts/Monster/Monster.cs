@@ -4,37 +4,29 @@ using UnityEngine;
 
 namespace TMI
 {
+    [DefaultExecutionOrder(-100)]
     public class Monster : MonoBehaviour
     {
-        public class Info
-        {
-            public int gateWay = 0;
-            public IEnumerator<Transform> path;
-            public int damage = 1;
-            public float speed = 3f;
-        }
-
-        // 몹젠될때 젠된 장소를 나타내는 변수
-        public int gateWay = 0;
+        public IEnumerator<Vector3> path;
+        public int damage = 1;
+        public float speed = 30f;
 
         public Rigidbody rb;
-        public Info info;
-        public StateMachine<Monster, GameManager> stateMachine;
+        public StateMachine stateMachine;
 
-        public Transform target;
+        public Vector3 target;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
-            info = new Info();
-            stateMachine = new StateMachine<Monster, GameManager>();
-            stateMachine.Initialize(this);
+            stateMachine = new StateMachine();
+            stateMachine.Initialize(this.gameObject);
+            stateMachine.StateEnter();
         }
 
-        // 상태로 뺄 목록 Iv
-        private void Dead()
+        private void OnEnable()
         {
-            ObjPoolManager.instance.monsterPool.Push(this.gameObject);
+            stateMachine.StateEnter();
         }
     }
 }

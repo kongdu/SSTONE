@@ -5,36 +5,41 @@ using System;
 
 namespace TMI
 {
-    public class StateMachine<T, M> where T : Monster
-                                                where M : GameManager
+    public enum StateIndex
+    { Move, Attack, Dead, Damaged, PathSet, ETC, ETC2 };
+
+    public class StateMachine
     {
-        public Dictionary<string, State<Monster, GameManager>> stateDictionary = new Dictionary<string, State<Monster, GameManager>>();
-        private State<Monster, GameManager> currentState = null;
+        private StateIndex stateIndex = StateIndex.PathSet;
+        private State currentState = null;
 
-        // 상태들을 딕셔너리에 등록하하고 첫번째 상태를 경로셋팅으로 만드는 과정
+        private Dictionary<StateIndex, State> stateDataBase;
 
-        public void Initialize(Monster owner)
+        /// <summary>
+        /// 상태들을 머신에 등록하는 함수
+        /// </summary>
+        /// <param name="owner">생정자호출한놈의 레퍼런스값을 전달</param>
+        public void Initialize(GameObject owner)
         {
-            stateDictionary.Add("Move", new State_Move<Monster, GameManager>(owner));
-            stateDictionary.Add("Attack", new State_Attack<Monster, GameManager>(owner));
-            stateDictionary.Add("Dead", new State_Dead<Monster, GameManager>(owner));
-            stateDictionary.Add("Damaged", new State_Damaged<Monster, GameManager>(owner));
-            stateDictionary.Add("PathSet", new State_PathSet<Monster, GameManager>(owner));
-
+            stateDataBase = StateGenerator.Instance.PopStateList(owner);
             if (currentState == null)
             {
-                if (stateDictionary.TryGetValue("PathSet", out currentState)) { };
+                if (stateDataBase.TryGetValue(stateIndex, out currentState)) { Debug.Log("상태를 찾았다.1"); };
             }
+        }
+
+        public void StateEnter()
+        {
+            Debug.Log(currentState);
             currentState.Enter();
         }
 
-        // 상태 바꾸기
-
-        public void NextState(Func<string> a)
+        public void NextState(StateIndex changingState)
         {
-            string keyValue = a();
-            if (stateDictionary.TryGetValue(keyValue, out currentState)) { };
-            currentState.Enter();
+            stateIndex = changingState;
+            if (stateDataBase.TryGetValue(stateIndex, out currentState)) { Debug.Log("상태를 찾았다.2"); };
+
+            StateEnter();
         }
     }
 }

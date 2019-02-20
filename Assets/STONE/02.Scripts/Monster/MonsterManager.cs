@@ -10,7 +10,7 @@ namespace TMI
 
         private void Start()
         {
-            MonsterGen(50, 1f);
+            MonsterGen(500, 0.1f);
         }
 
         public void MonsterGen(int generatecount, float timelag)

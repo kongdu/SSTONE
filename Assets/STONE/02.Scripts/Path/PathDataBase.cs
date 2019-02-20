@@ -4,8 +4,16 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class PathDataBase
+    [DefaultExecutionOrder(-20000)]
+    public class PathDataBase : Singleton<PathDataBase>
     {
-        public List<IEnumerator<Transform>> pathlist = new List<IEnumerator<Transform>>();
+        public Queue<IEnumerator<Vector3>> completedPathlist;
+        //public Vector3 playerVector;
+
+        private void Awake()
+        {
+            completedPathlist = new Queue<IEnumerator<Vector3>>();
+            //  playerVector = new Vector3(0, 0, 0);
+        }
     }
 }

@@ -4,19 +4,26 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class State_Move<T, M> : State<T, M> where T : Monster
-                                                where M : GameManager
+    public class State_Move : State
     {
-        public State_Move(T owner)
+        private Mover mover;
+
+        public State_Move(GameObject owner)
         {
             Initialize(owner);
+        }
+
+        public override void Initialize(GameObject owner)
+        {
+            base.Initialize(owner);
+            mover = owner.gameObject.GetComponent<Mover>();
+            mover.completeMoveOperation += GetNextState;
         }
 
         public override void Enter()
         {
             Debug.Log("무브");
-            Debug.Log("공격으로");
-            owner.StartCoroutine(MoveToTarget());
+            mover.gameObject.SetActive(true);
         }
 
         public override void Run()
@@ -24,47 +31,19 @@ namespace TMI
             base.Run();
         }
 
-        public override string NextStatekey()
+        /// <summary>
+        /// 스테이트를 찾아내는 함수
+        /// </summary>
+        /// <returns></returns>
+        public override StateIndex GetNextState()
         {
-            return "Attack";
+            Exit();
+            return StateIndex.Attack;
         }
 
         public override void Exit()
         {
-            base.Exit();
-        }
-
-        private IEnumerator MoveToTarget()
-        {
-            var distance = 0f;
-            var dir = owner.target.position - owner.transform.position;
-
-            while (true)
-            {
-                distance = Vector3.Distance(owner.transform.position, owner.target.transform.position);
-                if (distance <= 0.3f)
-                    break;
-
-                owner.transform.LookAt(owner.target);
-                owner.rb.MovePosition(owner.transform.localPosition + owner.transform.forward * Time.deltaTime * info.speed);
-                yield return null;
-            }
-
-            owner.target = GetNextTarget();
-            owner.StartCoroutine(MoveToTarget());
-
-            yield break;
-        }
-
-        public Transform GetNextTarget()
-        {
-            IEnumerator<Transform> path = info.path;
-            if (path.MoveNext() == false)
-            {
-                path.Reset();
-                path.MoveNext();
-            }
-            return path.Current;
+            mover.gameObject.SetActive(false);
         }
     }
 }

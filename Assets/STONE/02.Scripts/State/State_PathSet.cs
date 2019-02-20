@@ -5,42 +5,49 @@ using System;
 
 namespace TMI
 {
-    public class State_PathSet<T, M> : State<T, M> where T : Monster
-                                                where M : GameManager
+    public class State_PathSet : State
     {
-        private IEnumerator<Transform> path;
-        private int gateWayNum;
+        private Monster monster;
 
-        public State_PathSet(Monster owner)
+        public State_PathSet(GameObject owner)
         {
             Initialize(owner);
         }
 
-        public override void Enter()
+        public override void Initialize(GameObject owner)
         {
-            Debug.Log("경로설정");
-
-            Debug.Log("1");
-            gateWayNum = info.gateWay;
-            Debug.Log("게이트웨이번호" + info.gateWay);
-            if (info.path != null)
-            {
-                info.path = null;
-            }
-            Debug.Log("패스초기화");
-            path = SpwanPoints.instance.spwanPoints[gateWayNum].pathDataBase.pathlist[0];
-            info.path = this.path;
-            Debug.Log("패스셋");
-            stateMachine.NextState(NextStatekey);
+            base.Initialize(owner);
+            monster = owner.gameObject.GetComponent<Monster>();
         }
 
-        public override string NextStatekey()
+        public override void Enter()
         {
-            return "Move";
+            SetPath();
+            monster.stateMachine.NextState(StateIndex.Move);
+        }
+
+        public override StateIndex GetNextState()
+        {
+            return StateIndex.Move;
         }
 
         public override void Exit()
         {
+        }
+
+        private void SetPath()
+        {
+            Debug.Log("경로설정실행");
+            if (monster.path != null)
+            {
+                PathDataBase.Instance.completedPathlist.Enqueue(monster.path);
+                Debug.Log("경로를 큐안에 넣음");
+                monster.path = null;
+            }
+            Debug.Log("경로초기화성공");
+            monster.path = PathDataBase.Instance.completedPathlist.Dequeue();
+            Debug.Log(PathDataBase.Instance.completedPathlist.Count);
+            Debug.Log("패스셋성공");
         }
     }
 }
