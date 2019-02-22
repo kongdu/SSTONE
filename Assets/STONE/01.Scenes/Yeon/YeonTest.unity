@@ -128,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &94694039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,6 +146,8 @@ MonoBehaviour:
   beam: {fileID: 135732, guid: b982cfeb839bad54888d1388d5ab8633, type: 3}
   line: {fileID: 12082914, guid: b982cfeb839bad54888d1388d5ab8633, type: 3}
   beamEndOffset: 1
+  beamMaxDistance: 150
+  laserBeamHitRadius: 3
   textureScrollSpeed: 8
   textureLengthScale: 3
 --- !u!4 &94694040
@@ -347,6 +349,8 @@ MonoBehaviour:
   beam: {fileID: 171968, guid: 4241b2b766ba70e448927bbb1cfeda43, type: 3}
   line: {fileID: 12075300, guid: 4241b2b766ba70e448927bbb1cfeda43, type: 3}
   beamEndOffset: 1
+  beamMaxDistance: 150
+  laserBeamHitRadius: 3
   textureScrollSpeed: 8
   textureLengthScale: 3
 --- !u!4 &843580048

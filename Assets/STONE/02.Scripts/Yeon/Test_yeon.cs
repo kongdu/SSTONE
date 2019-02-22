@@ -4,20 +4,21 @@ using UnityEngine;
 
 namespace TMI
 {
+    //만들어놓은 이벤트에 메소드 연결
     public class Test_yeon : MonoBehaviour
     {
         private void OnEnable()
         {
             ViveController.OnTouchPadSwipe += SwipeTest;
-            ViveController.OnTouchPadClickLeft += LeftClickTest;
-            ViveController.OnTouchPadClickRight += RightClickTest;
+            ViveController.OnClickPad_LeftSide += LeftClickTest;
+            ViveController.OnClickPad_RightSide += RightClickTest;
         }
 
         private void OnDisable()
         {
             ViveController.OnTouchPadSwipe -= SwipeTest;
-            ViveController.OnTouchPadClickLeft -= LeftClickTest;
-            ViveController.OnTouchPadClickRight -= RightClickTest;
+            ViveController.OnClickPad_LeftSide -= LeftClickTest;
+            ViveController.OnClickPad_RightSide -= RightClickTest;
         }
 
         private void SwipeTest(float angle)

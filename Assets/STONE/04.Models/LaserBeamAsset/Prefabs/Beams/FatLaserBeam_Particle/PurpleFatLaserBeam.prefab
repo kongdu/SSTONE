@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 400440}
+  - component: {fileID: 892803864282622824}
   - component: {fileID: 12075300}
   m_Layer: 0
   m_Name: PurpleFatLaserBeam
@@ -16,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400440
 Transform:
   m_ObjectHideFlags: 0
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &892803864282622824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283d5018cd21b0943a8703e448746ca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textureScrollSpeed: 8
 --- !u!120 &12075300
 LineRenderer:
   m_ObjectHideFlags: 0
