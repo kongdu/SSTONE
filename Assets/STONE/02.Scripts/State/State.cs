@@ -6,10 +6,13 @@ using System;
 namespace TMI
 {
     public class State
-
     {
         protected StateMachine stateMachine;
         protected GameObject owner;
+
+        public State(GameObject owner)
+        {
+        }
 
         public virtual void Initialize(GameObject owner)
         {

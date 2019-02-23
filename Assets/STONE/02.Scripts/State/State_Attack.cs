@@ -6,15 +6,21 @@ namespace TMI
 {
     public class State_Attack : State
     {
-        public State_Attack(GameObject owner)
+        public State_Attack(GameObject owner) : base(owner)
         {
             Initialize(owner);
+        }
+
+        public override void Initialize(GameObject owner)
+        {
+            base.Initialize(owner);
+            stateMachine = owner.gameObject.GetComponent<Monster>().stateMachine;
         }
 
         public override void Enter()
         {
             Debug.Log("어택엔터");
-            stateMachine.NextState(StateIndex.Damaged);
+            stateMachine.NextState(GetNextState());
         }
 
         public override void Run()
@@ -24,12 +30,11 @@ namespace TMI
 
         public override StateIndex GetNextState()
         {
-            return StateIndex.Dead;
+            return StateIndex.Damaged;
         }
 
         public override void Exit()
         {
-            Exit();
         }
     }
 }

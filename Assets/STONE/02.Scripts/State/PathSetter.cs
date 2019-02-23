@@ -7,13 +7,5 @@ namespace TMI
     public class PathSetter : MonoBehaviour
     {
         public Monster monster;
-
-        private void OnEnable()
-        {
-        }
-
-        private void OnDisable()
-        {
-        }
     }
 }

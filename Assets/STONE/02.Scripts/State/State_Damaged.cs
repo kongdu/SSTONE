@@ -6,20 +6,28 @@ namespace TMI
 {
     public class State_Damaged : State
     {
-        public State_Damaged(GameObject owner)
+        public State_Damaged(GameObject owner) : base(owner)
         {
             Initialize(owner);
+        }
+
+        public override void Initialize(GameObject owner)
+        {
+            base.Initialize(owner);
+            stateMachine = owner.gameObject.GetComponent<Monster>().stateMachine;
         }
 
         public override void Enter()
         {
             Debug.Log("공격당함");
-            stateMachine.NextState(StateIndex.Dead);
+            Run();
         }
 
         public override void Run()
         {
-            base.Run();
+            Debug.Log("파티클출력");
+            stateMachine.NextState(GetNextState());
+            Exit();
         }
 
         public override StateIndex GetNextState()
@@ -29,7 +37,7 @@ namespace TMI
 
         public override void Exit()
         {
-            base.Exit();
+            Debug.Log("데미지받음상태끝");
         }
     }
 }

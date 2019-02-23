@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace TMI
 {
@@ -8,7 +9,7 @@ namespace TMI
     {
         private Mover mover;
 
-        public State_Move(GameObject owner)
+        public State_Move(GameObject owner) : base(owner)
         {
             Initialize(owner);
         }
@@ -16,14 +17,15 @@ namespace TMI
         public override void Initialize(GameObject owner)
         {
             base.Initialize(owner);
-            mover = owner.gameObject.GetComponent<Mover>();
-            mover.completeMoveOperation += GetNextState;
+            stateMachine = owner.gameObject.GetComponent<Monster>().stateMachine;
         }
 
         public override void Enter()
         {
             Debug.Log("무브");
-            mover.gameObject.SetActive(true);
+            if (!owner.activeSelf) { return; }
+            mover.On();
+            //mover.gameObject.SetActive(true);
         }
 
         public override void Run()
@@ -37,13 +39,19 @@ namespace TMI
         /// <returns></returns>
         public override StateIndex GetNextState()
         {
-            Exit();
+            mover.Off();
             return StateIndex.Attack;
+        }
+
+        public void ToAttack()
+        {
+            mover.Off();
+            stateMachine.NextState(StateIndex.Attack);
         }
 
         public override void Exit()
         {
-            mover.gameObject.SetActive(false);
+            //mover.gameObject.SetActive(false);
         }
     }
 }

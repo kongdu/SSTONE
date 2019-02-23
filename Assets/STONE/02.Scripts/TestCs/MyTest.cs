@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyTest : MonoBehaviour
+namespace TMI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MyTest : MonoBehaviour
     {
-        
-    }
+        public Monster mons;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Onclick();
+            }
+        }
+
+        public void Onclick()
+        {
+            mons.Damaged();
+        }
     }
 }

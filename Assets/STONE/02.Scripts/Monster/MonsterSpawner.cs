@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace TMI
 {
+    [DefaultExecutionOrder(-200)]
     public class MonsterSpawner : MonoBehaviour
     {
         public Transform[] monsterGeneratezone;
