@@ -10,7 +10,7 @@ public class MonsterMove : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
 
-    private void Start()
+    private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent == null)
@@ -30,7 +30,19 @@ public class MonsterMove : MonoBehaviour
         {
             Vector3 targetVector = destination.transform.position;
             navMeshAgent.SetDestination(targetVector);
-            navMeshAgent.isStopped = false;
         }
+        else
+        {
+            destination.position = new Vector3(0, 0, 0);
+        }
+    }
+
+    /// <summary>
+    /// 켜짐꺼짐
+    /// </summary>
+    /// <param name="onoff">true=꺼짐,false=켜짐</param>
+    public void OnOff(bool onoff)
+    {
+        navMeshAgent.isStopped = onoff;
     }
 }
