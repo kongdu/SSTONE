@@ -8,4 +8,8 @@ public class Dead : State
     {
         Debug.Log("난 죽었다");
     }
+
+    public override void Exit()
+    {
+    }
 }

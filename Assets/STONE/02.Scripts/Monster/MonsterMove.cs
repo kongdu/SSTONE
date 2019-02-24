@@ -37,6 +37,11 @@ public class MonsterMove : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        transform.position = new Vector3(transform.position.x, Mathf.PingPong(Time.time * 3, 3), transform.position.z);
+    }
+
     /// <summary>
     /// 켜짐꺼짐
     /// </summary>
