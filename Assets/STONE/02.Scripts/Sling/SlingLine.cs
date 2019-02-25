@@ -1,57 +1,56 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SlingLine : Singleton<SlingLine>
+namespace TMI
 {
-    private SpringJoint joint;
-
-    private LineRenderer[] lineRenderers;
-
-    public Func<SpringJoint> Findjoint => () => joint = FindObjectOfType<SpringJoint>();
-
-    private Action FindLines => () => lineRenderers = FindObjectsOfType<LineRenderer>();
-
-    private Action SlinglinePos;
-
-    private void Awake()
+    public class SlingLine : Singleton<SlingLine>
     {
-        FindLines?.Invoke();
-        Findjoint?.Invoke();
+        private SpringJoint joint;
 
-        MethodChain(InitialLineRend, true);
+        private LineRenderer[] lineRenderers;
 
-        SlinglinePos?.Invoke();
+        public Func<SpringJoint> Findjoint => () => joint = FindObjectOfType<SpringJoint>();
 
-        MethodChain(InitialLineRend, false);
+        private Action FindLines => () => lineRenderers = GetComponentsInChildren<LineRenderer>();
 
-        MethodChain(LastLineRend, true);
-    }
+        private Action linefirst;
 
+        private Action lineLast;
 
+        private void OnEnable()
+        {
+            linefirst += InitialLineRend;
+            lineLast += LastLineRend;
+        }
 
-    private void Update()
-    {
-        SlinglinePos?.Invoke();
-    }
+        private void OnDisable()
+        {
+            linefirst -= InitialLineRend;
+            lineLast -= LastLineRend;
+        }
 
-    /// <summary>
-    /// 연결할 메소드, True(연결)/False(해제)
-    /// </summary>>
-    private void MethodChain(Action action, bool flag)
-    {
-        if (flag) SlinglinePos += action;
-        else SlinglinePos -= action;
-    }
-    private void InitialLineRend()
-    {
-        foreach (var item in lineRenderers)
-            item.SetPosition(0, item.transform.position);
-    }
-    private void LastLineRend()
-    {
-        foreach (var item in lineRenderers)
-            item.SetPosition(1, joint.transform.position);
+        private void Awake()
+        {
+            FindLines?.Invoke();
+            Findjoint?.Invoke();
+        }
+
+        private void Update()
+        {
+            linefirst?.Invoke();
+            lineLast?.Invoke();
+        }
+
+        private void InitialLineRend()
+        {
+            foreach (var item in lineRenderers)
+                item.SetPosition(0, item.transform.position);
+        }
+
+        private void LastLineRend()
+        {
+            foreach (var item in lineRenderers)
+                item.SetPosition(1, joint.transform.position);
+        }
     }
 }

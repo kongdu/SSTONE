@@ -39,7 +39,9 @@ namespace HTC.UnityPlugin.Vive
         public Rigidbody grabRigidbody { get; set; }
 
         public event Action afterGrabberGrabbed { add { m_afterGrabberGrabbed += value; } remove { m_afterGrabberGrabbed -= value; } }
+
         public event Action beforeGrabberReleased { add { m_beforeGrabberReleased += value; } remove { m_beforeGrabberReleased -= value; } }
+
         public event Action onGrabberDrop { add { m_onGrabberDrop += value; } remove { m_onGrabberDrop -= value; } }
 
         protected virtual void Awake()

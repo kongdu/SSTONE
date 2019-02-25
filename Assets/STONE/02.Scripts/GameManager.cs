@@ -2,57 +2,68 @@
 
 namespace TMI
 {
+    public enum GameState
+    {
+        Waiting,
+        Running,
+        End
+    }
+
     public class GameManager : Singleton<GameManager>
     {
-        public enum GameProgressState
-        {
-            GAMESTART,
-            GAMEOVER
-        }
+        public GameState state = GameState.Waiting;
 
-        public GameProgressState state = GameProgressState.GAMEOVER;
+        public event Action ResetInfo = () => { };
 
-        public Action Initialize;
+        [NonSerialized]
+        public Player player;
 
-        private Action Progress;
+        private GameManager gameMgr = null;
+
+        private GameStateBase statebase = null;
+
+        public Action gameStartEnd = () => { };
 
         private void Awake()
         {
-            Progress += 게임시작;
+            gameMgr = this;
+            player = FindObjectOfType<Player>();
+            ChangeState(GameState.Waiting);
         }
 
-        /// <summary>
-        /// 호출하게 되면 상태가 변함. START/OVER
-        /// </summary>
-        public void StateConversion()
+        public void GameOver()
         {
-            Progress?.Invoke();
-
-            if (state == GameProgressState.GAMESTART)
-            {
-                Progress -= 게임시작;
-                Progress += 종료;
-            }
-            else
-            {
-                Progress -= 종료;
-                Progress += 게임시작;
-
-                // TODO : 초기화 기능
-
-                // 게임이 끝났을때 몬스터쪽의 리셋정보 이벤트를 연결
-                Initialize?.Invoke();
-            }
+            ChangeState(GameState.End);
         }
 
-        /// <summary>
-        /// 처음에 시작할떄
-        /// </summary>
-        public void 게임시작() => state = GameProgressState.GAMESTART;
+        // 투사체로 Ui를 쏘면 state를 실행중으로 변환한다.
+        public void GameStart()
+        {
+            ChangeState(GameState.Running);
+        }
 
-        /// <summary>
-        /// 클리어/종료조건 (플레이어가 죽음)
-        /// </summary>
-        public void 종료() => state = GameProgressState.GAMEOVER;
+        public void ChangeState(GameState nextState)
+        {
+            ResetInfo?.Invoke();
+
+            if (statebase != null)
+                statebase.Exit();
+
+            statebase = CreateStateInstance(nextState);
+
+            statebase.Enter();
+        }
+
+        private GameStateBase CreateStateInstance(GameState nextState)
+        {
+            switch (nextState)
+            {
+                case GameState.Waiting: return new GameWaiting(gameMgr);
+                case GameState.Running: return new GameStarting(gameMgr);
+                case GameState.End: return new GameOver(gameMgr);
+            }
+
+            return null;
+        }
     }
 }

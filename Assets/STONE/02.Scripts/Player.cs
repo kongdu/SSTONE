@@ -1,65 +1,63 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace TMI
 {
     public class Player : MonoBehaviour
     {
-        private int PlayerMaxHp { get; set; }
+        public enum State { Idle, Live, Die }
 
-        private int playerHp;
+        public State state = State.Live;
 
-        private int PlayerHp
+        public event Action DieBegin = () => { };
+
+        public bool IsDied { get => hp <= 0; }
+        public bool IsLive { get => hp >= 0; }
+
+        private int maxhp { get; set; }
+
+        private int hp;
+
+        public int Hp
         {
-            set
-            {
-                playerHp = value;
-                UIManager.instance.PlayerHpText.text = playerHp.ToString();
-            }
-        }
-
-        public bool IsDied
-        {
-            // get => playerHp <= 0;
             get
             {
-                return playerHp <= 0;
+                return hp;
+            }
+            set
+            {
+                if (IsLive)
+                    hp = value;
+                UIManager.Instance.PlayerHpText.text = hp.ToString();
             }
         }
 
-        private void Awake()
+        public void PlayerInfoReset()
         {
-            GameManager.instance.Initialize += ResetInfo;
+            maxhp = 10; //예비수치 10
+            Hp = maxhp;
         }
 
-        public void ResetInfo()
+        public int Hittable()
         {
-            PlayerMaxHp = 10; //예비수치 10
-            PlayerHp = PlayerMaxHp;
+            return Hp -= 1;
         }
 
-        //증감
-        /// <summary>
-        /// 체력회복하는 돌에서 사용시 수정예정.
-        /// </summary>
-        public void HpIncrease(int hp) =>
-            PlayerHp = playerHp + hp;
-
-        //감소
-        private void HpDecrease(int hp) =>
-            PlayerHp = playerHp - hp;
-
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("몬스터에 달린 태그"))
+            var hit = other.transform.GetComponent<Hittable>();
+            if (hit == null)
+                return;
+
+            if (IsDied)
             {
-                if (IsDied)
-                {
-                    // 플레이어가 죽었을때 GameManager에 알려줌.
-                }
-                else
-                {
-                    // Hpincrease(Hp감소수치)
-                }
+                DieBegin?.Invoke();
+            }
+            else
+            {
+                StoneBase.type = StoneBase.StoneType.None;
+                hit.OnHit();
+                Hittable();
             }
         }
     }

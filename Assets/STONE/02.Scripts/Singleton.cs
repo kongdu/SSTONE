@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T:MonoBehaviour
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     public static T instance = null;
+
     public static T Instance
     {
         get
@@ -18,7 +17,6 @@ public class Singleton<T> : MonoBehaviour where T:MonoBehaviour
                     Debug.LogError("Singleton Error");
                 }
             }
-            
 
             return instance;
         }
