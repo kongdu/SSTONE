@@ -8,9 +8,14 @@ namespace TMI
     {
         public MonsterSpawner monsterSpawner;
 
+        private void Awake()
+        {
+            Debug.unityLogger.logEnabled = false;
+        }
+
         private void Start()
         {
-            MonsterGen(50, 1f);
+            MonsterGen(500, 0.5f);
         }
 
         public void MonsterGen(int generatecount, float timelag)

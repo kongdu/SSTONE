@@ -3,34 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class StateMachine : MonoBehaviour
+namespace TMI
 {
-    private State currentState;
-
-    public void Awake()
+    public class StateMachine : MonoBehaviour
     {
-        if (currentState == null)
-        {
-            Debug.Log("상태가 없습니다.");
-            currentState = GetComponent<Move>();
-        }
-    }
+        private State currentState;
 
-    public void ChangeState(Func<State> some = null)
-    {
-        if (some != null)
+        public void Awake()
         {
-            currentState = some();
+            if (currentState == null)
+            {
+                Debug.Log("상태가 없습니다.");
+                currentState = GetComponent<Move>();
+                Debug.Log("상태" + currentState);
+            }
         }
-        else
-        {
-            currentState = GetComponent<Move>();
-        }
-        ToTheCurrentState();
-    }
 
-    private void ToTheCurrentState()
-    {
-        currentState.Enter();
+        public void ChangeState(Func<State> some = null)
+        {
+            if (some != null)
+            {
+                currentState.Exit();
+                currentState = some();
+            }
+            else
+            {
+                currentState = GetComponent<Move>();
+            }
+            ToTheCurrentState();
+        }
+
+        private void ToTheCurrentState()
+        {
+            currentState.Enter();
+        }
     }
 }

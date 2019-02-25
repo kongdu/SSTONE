@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : State
+namespace TMI
 {
-    private MonsterMove mm;
-
-    private void Awake()
+    public class Move : State
     {
-        mm = GetComponent<MonsterMove>();
-    }
+        private MonsterMove mm;
 
-    public override void Enter()
-    {
-        mm.OnOff(false);
-    }
+        private void Awake()
+        {
+            mm = GetComponent<MonsterMove>();
+        }
 
-    public override void Exit()
-    {
-        mm.OnOff(true);
+        public override void Enter()
+        {
+            mm.NavOnOff(false);
+        }
+
+        public override void SomethingHappen()
+        {
+            GetComponent<StateMachine>().ChangeState(() => GetComponent<Attack>());
+        }
+
+        public override void Exit()
+        {
+            mm.NavOnOff(true);
+            mm.enabled = false;
+        }
     }
 }

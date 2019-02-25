@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 namespace TMI
 {
     public class GameEffectManager : Singleton<GameEffectManager>
     {
         public Material[] mats;
+
+        public event Action CompleteEffect = () => { };
 
         public Collider[] FindRangeObj(Collision cols, float radius)
         {
@@ -46,7 +49,7 @@ namespace TMI
         private IEnumerator DeadMotion(Renderer renderer, GameObject ps)
         {
             string dissolveKey = "_Progress";
-            float delay = Random.Range(0.5f, 1.0f);
+            float delay = UnityEngine.Random.Range(0.5f, 1.0f);
             yield return new WaitForSeconds(delay);
             float n = 1.0f;
 
@@ -58,7 +61,7 @@ namespace TMI
                     renderer.material.SetFloat(dissolveKey, 0);
                     //ps.SetActive(false);
                     //오브젝트풀에 넣기
-
+                    CompleteEffect();
                     yield break;
                 }
                 //yield return new WaitForSeconds(0.001f);

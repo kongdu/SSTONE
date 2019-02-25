@@ -5,12 +5,13 @@ using UnityEngine;
 
 namespace TMI
 {
+    [DefaultExecutionOrder(-1000)]
     public class ObjPoolManager : MonoBehaviour
     {
         public static ObjPoolManager instance = null;
 
         public ObjPool<GameObject> monsterPool;
-        private int maxCount = 100;
+        private int maxCount = 500;
         public GameObject monsterPrefab;
 
         private void Awake()

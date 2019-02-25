@@ -49,8 +49,8 @@ namespace TMI
 
         public void Push(T obj)
         {
-            objects.Push(obj);
             ActiveFunction(obj);
+            objects.Push(obj);
         }
     }
 }

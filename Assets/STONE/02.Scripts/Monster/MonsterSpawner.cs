@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace TMI
 {
+    [DefaultExecutionOrder(-200)]
     public class MonsterSpawner : MonoBehaviour
     {
-        public Transform[] monsterGeneratezone;
+        private void Awake()
+        {
+        }
 
         /// <summary>
         /// 몬스터를찍어냅니다.
@@ -16,14 +19,26 @@ namespace TMI
         /// <returns></returns>
         public IEnumerator GenerateMonster(int count, float delay = 1f)
         {
-            if (delay < 1f) { delay = 1f; }
+            if (delay < 0.5f)
+            { delay = 0.5f; }
             for (int i = 0; i < count; i++)
             {
-                int spwanpoint = i % monsterGeneratezone.Length;
                 var monster = ObjPoolManager.instance.monsterPool.Pop();
-                monster.transform.position = monsterGeneratezone[spwanpoint].transform.position;
+                monster.transform.position = FindFarPoint(this.transform.position);
                 yield return new WaitForSeconds(delay);
             }
+        }
+
+        /// <summary>
+        /// pivot 기준으로 최소 거리 ~ 최대 거리 사이에 무작위로 위치 생성
+        /// </summary>
+        /// <returns>생성된 위치</returns>
+        public Vector3 FindFarPoint(Vector3 pivot, float minDistance = 80f, float maxDistance = 99f)
+        {
+            float distance = Random.Range(minDistance, maxDistance);
+            float angle = Random.Range(0f, 360f);
+            float radian = angle * Mathf.Deg2Rad;
+            return pivot + (new Vector3(Mathf.Cos(radian), 0f, Mathf.Sin(radian)) * distance);
         }
     }
 }
