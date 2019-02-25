@@ -78,12 +78,14 @@ namespace TMI
 
         public void MoveNext()
         {
+            Debug.Log("Next");
             LoopStone(() => stones.Count - 1, () => 0);
             MoveTo();
         }
 
         public void MovePrev()
         {
+            Debug.Log("Prev");
             LoopStone(() => 0, () => stones.Count);
             MoveTo();
         }
