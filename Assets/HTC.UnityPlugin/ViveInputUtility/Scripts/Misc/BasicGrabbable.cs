@@ -66,22 +66,29 @@ namespace HTC.UnityPlugin.Vive
         [FormerlySerializedAs("followingDuration")]
         [SerializeField]
         private float m_followingDuration = DEFAULT_FOLLOWING_DURATION;
+
         [FormerlySerializedAs("overrideMaxAngularVelocity")]
         [SerializeField]
         private bool m_overrideMaxAngularVelocity = true;
+
         [FormerlySerializedAs("unblockableGrab")]
         [SerializeField]
         private bool m_unblockableGrab = true;
+
         [SerializeField]
         private ColliderButtonEventData.InputButton m_grabButton = ColliderButtonEventData.InputButton.Trigger;
+
         [SerializeField]
         private bool m_allowMultipleGrabbers = true;
+
         [FormerlySerializedAs("afterGrabbed")]
         [SerializeField]
         private UnityEventGrabbable m_afterGrabbed = new UnityEventGrabbable();
+
         [FormerlySerializedAs("beforeRelease")]
         [SerializeField]
         private UnityEventGrabbable m_beforeRelease = new UnityEventGrabbable();
+
         [FormerlySerializedAs("onDrop")]
         [SerializeField]
         private UnityEventGrabbable m_onDrop = new UnityEventGrabbable(); // change rigidbody drop velocity here
@@ -119,10 +126,12 @@ namespace HTC.UnityPlugin.Vive
         public Rigidbody rigid { get { return grabRigidbody; } set { grabRigidbody = value; } }
 
 #if UNITY_EDITOR
+
         protected virtual void OnValidate()
         {
             MaterialChanger.SetAllChildrenHeighlightButton(gameObject, m_grabButton);
         }
+
 #endif
 
         protected override void Awake()
