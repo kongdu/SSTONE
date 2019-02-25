@@ -4,22 +4,25 @@ namespace TMI
 {
     public class Dead : State
     {
+        private DeadEffecter deadEffecter;
+
         private void Awake()
         {
-            GameEffectManager.Instance.CompleteEffect += Exit;
+            deadEffecter = GetComponent<DeadEffecter>();
+            deadEffecter.CompleteEffect += Exit;
         }
 
         public override void Enter()
         {
             Debug.Log("난 죽었다");
 
-            if (TMI.StoneBase.type == TMI.StoneBase.StoneType.Dimement)
-                StartCoroutine(TMI.GameEffectManager.Instance.DimementEffect(transform));
-            else
-            {
-                StartCoroutine(TMI.GameEffectManager.Instance.LaserEffect(transform));
-                Debug.Log("디멘터를 못찾았음");
-            }
+            //if (TMI.StoneBase.type == TMI.StoneBase.StoneType.Dimement)
+            StartCoroutine(deadEffecter.DimementEffect());
+            //else
+            //{
+            //    StartCoroutine(TMI.GameEffectManager.Instance.LaserEffect(transform));
+            //    Debug.Log("디멘터를 못찾았음");
+            //}
         }
 
         public override void Exit()

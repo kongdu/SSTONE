@@ -7,7 +7,7 @@ namespace TMI
 {
     public class StateMachine : MonoBehaviour
     {
-        private State currentState;
+        public State currentState;
 
         public void Awake()
         {

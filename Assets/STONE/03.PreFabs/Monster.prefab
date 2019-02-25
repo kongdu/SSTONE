@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 4187158372182996809}
   - component: {fileID: 4913245766764611794}
   - component: {fileID: 7602133672973438626}
+  - component: {fileID: 2098033273661532338}
   m_Layer: 10
   m_Name: Monster
   m_TagString: Untagged
@@ -205,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e100f21a8e66ba84bb790125771ad700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: {fileID: 0}
 --- !u!114 &2344866296508618805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +262,18 @@ CapsuleCollider:
   m_Height: 1.25607
   m_Direction: 1
   m_Center: {x: 0, y: 0.628035, z: 0.027925223}
+--- !u!114 &2098033273661532338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4633740801574382078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9282052d9960e1468a99bfc7318fba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &185185713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -375,7 +389,7 @@ PrefabInstance:
     - target: {fileID: 7447440539012755401, guid: 12c25da927563ee4e9578f04f87c7eef,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.522
       objectReference: {fileID: 0}
     - target: {fileID: 7447440539012755401, guid: 12c25da927563ee4e9578f04f87c7eef,
         type: 3}
@@ -451,6 +465,11 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 969979495589949019, guid: 12c25da927563ee4e9578f04f87c7eef,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7447972222942158702, guid: 12c25da927563ee4e9578f04f87c7eef,
         type: 3}

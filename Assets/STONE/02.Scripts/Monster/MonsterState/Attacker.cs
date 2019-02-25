@@ -97,7 +97,7 @@ namespace TMI
                 tpos = new Vector3(tx, ty, tz);
 
                 //비행동안 날아가는 총알의 위치와 로테이션 변환.
-                transform.LookAt(tpos);
+                //transform.LookAt(tpos);
                 transform.position = tpos;
 
                 //_skills.targetMarkColor = new Color(0f, elapsed_time / dat, 0f, 1f);
