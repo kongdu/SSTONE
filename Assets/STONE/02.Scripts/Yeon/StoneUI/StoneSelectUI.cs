@@ -21,18 +21,12 @@ namespace TMI
         private void Awake()
         {
             angleOffset = 360f / stonePrefabs.Count;
-            //Debug.Log($"처음angleOffset:{angleOffset}");
             SpawnStones();
         }
 
         private void Start()
         {
             selectedCircle.transform.localPosition = new Vector3(0f, distance);
-        }
-
-        private void Update()
-        {
-            Debug.Log(SelectedStone);
         }
 
         private void OnEnable()
@@ -100,7 +94,6 @@ namespace TMI
             {
                 item.localPosition = CalcPosition(angle, distance);
                 angle += angleOffset;
-                //Debug.Log($"angleOffset:{angleOffset} \n angle:{angle}");
             }
         }
     }
