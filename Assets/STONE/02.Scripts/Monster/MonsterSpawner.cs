@@ -7,10 +7,6 @@ namespace TMI
     [DefaultExecutionOrder(-200)]
     public class MonsterSpawner : MonoBehaviour
     {
-        private void Awake()
-        {
-        }
-
         /// <summary>
         /// 몬스터를찍어냅니다.
         /// </summary>
@@ -25,6 +21,7 @@ namespace TMI
             {
                 var monster = ObjPoolManager.instance.monsterPool.Pop();
                 monster.transform.position = FindFarPoint(this.transform.position);
+                monster.SetActive(true);
                 yield return new WaitForSeconds(delay);
             }
         }

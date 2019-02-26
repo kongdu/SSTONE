@@ -34,7 +34,7 @@ namespace TMI
 
         public void EndSequence()
         {
-            Debug.Log("아이들로");
+            //Debug.Log("아이들로");
             GetComponent<StateMachine>().ChangeState(() => GetComponent<Idle>());
         }
 

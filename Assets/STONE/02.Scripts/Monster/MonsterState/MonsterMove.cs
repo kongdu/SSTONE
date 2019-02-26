@@ -7,8 +7,7 @@ namespace TMI
 {
     public class MonsterMove : MonoBehaviour
     {
-        [SerializeField]
-        private Vector3 destination = new Vector3(0, 0, 0);
+        private Vector3 destination;
 
         public NavMeshAgent navMeshAgent;
         private float jumpSpeed;
@@ -35,12 +34,12 @@ namespace TMI
         {
             if (destination != null)
             {
-                Vector3 targetVector = destination;
+                Vector3 targetVector = Player.Instance.transform.position;
                 navMeshAgent.SetDestination(targetVector);
             }
             else
             {
-                destination = new Vector3(0, 0, 0);
+                destination = Player.Instance.transform.position;
             }
         }
 

@@ -40,6 +40,7 @@ namespace TMI
 
         private void OnEnable()
         {
+            arrivepos = Player.Instance.transform.position;
             start_pos = transform.position;
             end_pos = arrivepos;
             FlyToTarget(start_pos, end_pos, g, max_height);

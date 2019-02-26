@@ -42,7 +42,7 @@ namespace TMI
             if (this.objects.Count <= 0)
                 Allocate();
             var obj = objects.Dequeue();
-            ActiveFunction(obj);
+            //ActiveFunction(obj);
 
             return obj;
         }

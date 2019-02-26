@@ -16,9 +16,10 @@ namespace TMI
 
         private void OnEnable()
         {
+            mm.enabled = true;
             mm.navMeshAgent.enabled = true;
             mm.NavOnOff(false);
-            mm.navMeshAgent.SetDestination(new Vector3(0, 0, 0));
+            mm.navMeshAgent.SetDestination(Player.Instance.transform.position);
         }
 
         //public override void Enter()

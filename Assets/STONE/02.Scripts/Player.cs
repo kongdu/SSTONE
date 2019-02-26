@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class Player : MonoBehaviour
+    public class Player : Singleton<Player>
     {
         public enum State { Idle, Live, Die }
 
