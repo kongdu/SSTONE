@@ -42,6 +42,7 @@ namespace TMI
 
         public virtual void ResetPos()
         {
+            rid.GetComponent<Collider>().enabled = false;
             rid.constraints = RigidbodyConstraints.FreezeAll;
             transform.localPosition = pos + Vector3.up * 2f;
             RightController.ControllerPressUp -= weapon.StateAttack;

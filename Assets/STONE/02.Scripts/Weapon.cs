@@ -38,6 +38,7 @@ namespace TMI
             StateChange(WeaponState.IDLE);
             stoneSelect = FindObjectOfType<StoneSelectUI>().SelectedStone;
             projectile = stoneSelect.GetComponent<StoneBase>();
+            projectile.GetComponent<Collider>().enabled = true;
 
             RightController.ControllerPress += SlingReload;
         }

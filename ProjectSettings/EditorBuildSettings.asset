@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/STONE/01.Scenes/LevelDesign 1.unity
+    guid: 946f9bb253606334a94eab1259ab59d5
   m_configObjects: {}
