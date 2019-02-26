@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace TMI
 {
@@ -20,7 +18,7 @@ namespace TMI
 
         private void Awake()
         {
-            angleOffset = 360f / stonePrefabs.Count;
+            angleOffset = 360f / stonePrefabs.Count - 1;
             SpawnStones();
         }
 

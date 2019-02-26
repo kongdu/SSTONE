@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 445842}
   - component: {fileID: 3306124}
   - component: {fileID: 2354910}
-  - component: {fileID: 9573510}
+  - component: {fileID: 928623100723804630}
+  - component: {fileID: 7247871637365909611}
+  - component: {fileID: 1324849077345382240}
   m_Layer: 0
-  m_Name: Pluto
+  m_Name: 04_Pluto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,22 +80,46 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!95 &9573510
-Animator:
-  serializedVersion: 3
+--- !u!114 &928623100723804630
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197770}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e04feab758664ed47a2f46074348a542, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd2cbd5b1c2f614b81c52d36c5dabfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rid: {fileID: 7247871637365909611}
+--- !u!54 &7247871637365909611
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197770}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!136 &1324849077345382240
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197770}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.44008595
+  m_Height: 0.86889017
+  m_Direction: 1
+  m_Center: {x: -0.015628695, y: -0.006101817, z: -0.00868845}
