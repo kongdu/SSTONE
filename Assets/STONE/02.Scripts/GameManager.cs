@@ -31,15 +31,15 @@ namespace TMI
             ChangeState(GameState.Waiting);
         }
 
-        public void GameOver()
-        {
-            ChangeState(GameState.End);
-        }
-
-        // 투사체로 Ui를 쏘면 state를 실행중으로 변환한다.
+        // 투사체로 UI를 쏘면 state를 실행중으로 변환한다.
         public void GameStart()
         {
             ChangeState(GameState.Running);
+        }
+
+        public void GameOver()
+        {
+            ChangeState(GameState.End);
         }
 
         public void ChangeState(GameState nextState)
