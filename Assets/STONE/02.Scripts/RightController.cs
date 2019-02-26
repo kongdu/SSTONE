@@ -15,16 +15,15 @@ namespace TMI
         // Update is called once per frame
         private void Update()
         {
-            if (ViveInput.GetPressDownEx(HandRole.RightHand, ControllerButton.Trigger))
+            if (ViveInput.GetPressDown(HandRole.RightHand, ControllerButton.Trigger))
             {
                 ControllerPressDown?.Invoke();
             }
-            if (ViveInput.GetPressEx(HandRole.RightHand, ControllerButton.Trigger))
+            else if (ViveInput.GetPress(HandRole.RightHand, ControllerButton.Trigger))
             {
                 ControllerPress?.Invoke();
             }
-
-            if (ViveInput.GetPressUpEx(HandRole.RightHand, ControllerButton.Trigger))
+            else if (ViveInput.GetPressUp(HandRole.RightHand, ControllerButton.Trigger))
             {
                 ControllerPressUp?.Invoke();
             }
