@@ -12,6 +12,7 @@ namespace TMI
         {
             attackMove = GetComponent<Attacker>();
             attackMove.AttackEnd += SomethingHappen;
+            enabled = false;
         }
 
         public override void SomethingHappen()
@@ -20,14 +21,25 @@ namespace TMI
         }
 
         public override void Enter()
+        private void OnEnable()
         {
             Debug.Log("어택상태로왓다");
             attackMove.enabled = true;
         }
 
-        public override void Exit()
+        //public override void Enter()
+        //{
+        //    Debug.Log("어택상태로왓다");
+        //    attackMove.enabled = true;
+        //}
+        private void OnDisable()
         {
             attackMove.enabled = false;
         }
+
+        //public override void Exit()
+        //{
+        //    attackMove.enabled = false;
+        //}
     }
 }

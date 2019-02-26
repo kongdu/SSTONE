@@ -11,7 +11,7 @@ namespace TMI
         public static ObjPoolManager instance = null;
 
         public ObjPool<GameObject> monsterPool;
-        private int maxCount = 500;
+        private int maxCount = 20;
         public GameObject monsterPrefab;
 
         private void Awake()

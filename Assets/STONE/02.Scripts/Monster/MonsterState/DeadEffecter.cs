@@ -15,6 +15,7 @@ namespace TMI
         private void Awake()
         {
             ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+            particleSystem = transform.GetChild(2).GetComponent<ParticleSystem>();
             renderer = GetComponent<Renderer>();
         }
 
@@ -22,18 +23,23 @@ namespace TMI
         {
             ps.gameObject.SetActive(true);
             ps.Play();
+            particleSystem.gameObject.SetActive(true);
+            particleSystem.Play();
             StoneBase.DeadEvent?.Invoke();
-            StartCoroutine(DeadMotion(ps.gameObject));
+            StartCoroutine(DeadMotion(particleSystem.gameObject));
             yield return null;
         }
 
         public void PlayDead()
         {
             StartCoroutine(DeadMotion(ps.gameObject));
+            StartCoroutine(DeadMotion(particleSystem.gameObject));
         }
 
         private IEnumerator DeadMotion(GameObject ps)
         {
+            particleSystem.gameObject.SetActive(true);
+            particleSystem.Play();
             string dissolveKey = "_Progress";
             float delay = UnityEngine.Random.Range(0.5f, 1.0f);
             yield return new WaitForSeconds(delay);

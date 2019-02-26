@@ -118,25 +118,6 @@ Light:
     type: 3}
   m_PrefabInstance: {fileID: 4935044984998637094}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &273872903 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4935044984701130803, guid: 558fac74a614e2243a34c10c22444113,
-    type: 3}
-  m_PrefabInstance: {fileID: 4935044984998637094}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &273872907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 273872903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cd30421f10f16146a05b0e51b101485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 1
 --- !u!1001 &640369685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144,11 +125,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6106720246328797474, guid: 08a1cf94bf58855449ea7ba47377dd4f,
-        type: 3}
-      propertyPath: arrivepos
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4633740801574382078, guid: 08a1cf94bf58855449ea7ba47377dd4f,
         type: 3}
       propertyPath: m_Name
@@ -158,6 +134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106720246328797474, guid: 08a1cf94bf58855449ea7ba47377dd4f,
+        type: 3}
+      propertyPath: arrivepos
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4636714264412270702, guid: 08a1cf94bf58855449ea7ba47377dd4f,
         type: 3}
@@ -219,10 +200,20 @@ PrefabInstance:
       propertyPath: destination
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4633740801574382079, guid: 08a1cf94bf58855449ea7ba47377dd4f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4633740801574382080, guid: 08a1cf94bf58855449ea7ba47377dd4f,
         type: 3}
       propertyPath: m_WalkableMask
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4113402840043576910, guid: 08a1cf94bf58855449ea7ba47377dd4f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08a1cf94bf58855449ea7ba47377dd4f, type: 3}

@@ -10,7 +10,7 @@ namespace TMI
 
         private void Awake()
         {
-            Debug.unityLogger.logEnabled = false;
+            //Debug.unityLogger.logEnabled = false;
         }
 
         private void Start()

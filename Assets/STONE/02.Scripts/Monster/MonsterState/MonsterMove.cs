@@ -10,7 +10,7 @@ namespace TMI
         [SerializeField]
         private Vector3 destination = new Vector3(0, 0, 0);
 
-        private NavMeshAgent navMeshAgent;
+        public NavMeshAgent navMeshAgent;
         private float jumpSpeed;
 
         private void Awake()
@@ -24,14 +24,14 @@ namespace TMI
             else
             {
                 navMeshAgent.isStopped = true;
-                SetDestination();
+                //SetDestination();
             }
         }
 
         /// <summary>
         /// 네비매시의 목적지를 탐색
         /// </summary>
-        private void SetDestination()
+        public void SetDestination()
         {
             if (destination != null)
             {

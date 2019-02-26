@@ -10,7 +10,7 @@ namespace TMI
         private Func<T> CreateFunction;
         private Action<T> ActiveFunction;
 
-        private Stack<T> objects;
+        private Queue<T> objects;
 
         /// <summary>
         /// 생성한오브젝트들이 들어있는 스택
@@ -25,7 +25,7 @@ namespace TMI
             {
                 this.ActiveFunction = ActiveFunction;
             }
-            this.objects = new Stack<T>(this.allocateCountPerOnce);
+            this.objects = new Queue<T>(this.allocateCountPerOnce);
 
             Allocate();
         }
@@ -33,7 +33,7 @@ namespace TMI
         private void Allocate()
         {
             for (int i = 0; i < allocateCountPerOnce; ++i)
-                objects.Push(CreateFunction());
+                objects.Enqueue(CreateFunction());
         }
 
         public T Pop()
@@ -41,7 +41,7 @@ namespace TMI
             // 스택에 오브젝트가 없으면, 새로 할당
             if (this.objects.Count <= 0)
                 Allocate();
-            var obj = objects.Pop();
+            var obj = objects.Dequeue();
             ActiveFunction(obj);
 
             return obj;
@@ -50,7 +50,7 @@ namespace TMI
         public void Push(T obj)
         {
             ActiveFunction(obj);
-            objects.Push(obj);
+            objects.Enqueue(obj);
         }
     }
 }

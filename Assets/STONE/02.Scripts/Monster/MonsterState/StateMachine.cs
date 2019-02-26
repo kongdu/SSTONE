@@ -23,7 +23,7 @@ namespace TMI
         {
             if (some != null)
             {
-                currentState.Exit();
+                currentState.enabled = false;
                 currentState = some();
             }
             else
@@ -35,7 +35,7 @@ namespace TMI
 
         private void ToTheCurrentState()
         {
-            currentState.Enter();
+            currentState.enabled = true;
         }
     }
 }

@@ -10,9 +10,12 @@ namespace TMI
         {
             deadEffecter = GetComponent<DeadEffecter>();
             deadEffecter.CompleteEffect += Exit;
+            deadEffecter.CompleteEffect += EndSequence;
+            enabled = false;
         }
 
         public override void Enter()
+        private void OnEnable()
         {
             Debug.Log("난 죽었다");
 
@@ -23,11 +26,38 @@ namespace TMI
             //    StartCoroutine(TMI.GameEffectManager.Instance.LaserEffect(transform));
             //    Debug.Log("디멘터를 못찾았음");
             //}
+            deadEffecter.PlayDead();
         }
 
         public override void Exit()
+        //public override void Enter()
+        //{
+        //    Debug.Log("난 죽었다");
+
+        //    //if (TMI.StoneBase.type == TMI.StoneBase.StoneType.Dimement)
+        //    //StartCoroutine(deadEffecter.DimementEffect());
+        //    deadEffecter.PlayDead();
+        //    //else
+        //    //{
+        //    //    StartCoroutine(TMI.GameEffectManager.Instance.LaserEffect(transform));
+        //    //    Debug.Log("디멘터를 못찾았음");
+        //    //}
+        //}
+
+        public void EndSequence()
+        {
+            Debug.Log("아이들로");
+            GetComponent<StateMachine>().ChangeState(() => GetComponent<Idle>());
+        }
+
+        private void OnDisable()
         {
             ObjPoolManager.instance.monsterPool.Push(this.gameObject);
         }
+
+        //public override void Exit()
+        //{
+        //    ObjPoolManager.instance.monsterPool.Push(this.gameObject);
+        //}
     }
 }
