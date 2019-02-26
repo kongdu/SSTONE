@@ -13,9 +13,7 @@ namespace TMI
         {
             if (currentState == null)
             {
-                Debug.Log("상태가 없습니다.");
                 currentState = GetComponent<Move>();
-                Debug.Log("상태" + currentState);
             }
         }
 

@@ -1,11 +1,13 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace TMI
 {
     public class UIManager : Singleton<UIManager>
     {
-        public Text PlayerHpText = null;
+        //SY가 만듦
+        public StartPanel startPanel;
 
-        public StoneBase[] stones;
+        public HpBar hpBar;
     }
 }

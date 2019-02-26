@@ -11,11 +11,13 @@ namespace TMI
 
         public ParticleSystem particleSystem;
         private new Renderer renderer;
+        private AudioSource deadSound;
 
         private void Awake()
         {
             particleSystem = transform.GetChild(2).GetComponent<ParticleSystem>();
             renderer = GetComponent<Renderer>();
+            deadSound = GetComponent<AudioSource>();
         }
 
         public IEnumerator DimementEffect()
@@ -44,10 +46,14 @@ namespace TMI
         {
             particleSystem.gameObject.SetActive(true);
             particleSystem.Play();
+            deadSound.Play();
             //string dissolveKey = "_Progress";
             //float delay = UnityEngine.Random.Range(0.5f, 1.0f);
-            yield return new WaitForSeconds(0.5f);
+            renderer.enabled = false;
+            yield return new WaitForSeconds(1f);
+
             CompleteEffect();
+
             //float n = 1.0f;
 
             //renderer.material = GameEffectManager.Instance.mats[1];

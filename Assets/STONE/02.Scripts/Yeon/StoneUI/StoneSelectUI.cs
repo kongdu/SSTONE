@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace TMI
 {
@@ -18,13 +20,22 @@ namespace TMI
 
         private void Awake()
         {
-            angleOffset = 360f / stonePrefabs.Count - 1;
+            angleOffset = 360f / stonePrefabs.Count;
             SpawnStones();
         }
 
         private void Start()
         {
             selectedCircle.transform.localPosition = new Vector3(0f, distance);
+        }
+
+        private void Update()
+        {
+            ///// 테스트 코드
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+                MovePrev();
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+                MoveNext();
         }
 
         private void OnEnable()
@@ -53,6 +64,7 @@ namespace TMI
             }
 
             MoveTo();
+            AlphaTo();
         }
 
         /// <summary>
@@ -76,16 +88,16 @@ namespace TMI
 
         public void MoveNext()
         {
-            Debug.Log("Next");
             LoopStone(() => stones.Count - 1, () => 0);
             MoveTo();
+            AlphaTo();
         }
 
         public void MovePrev()
         {
-            Debug.Log("Prev");
             LoopStone(() => 0, () => stones.Count);
             MoveTo();
+            AlphaTo();
         }
 
         private void MoveTo(float angle = 0f)
@@ -93,6 +105,22 @@ namespace TMI
             foreach (var item in stones)
             {
                 item.localPosition = CalcPosition(angle, distance);
+                angle += angleOffset;
+            }
+        }
+
+        private void AlphaTo(float angle = 0f)
+        {
+            foreach (var item in stones)
+            {
+                var mat = item.GetComponent<Renderer>().material;
+
+                var percent = (Mathf.Abs(angle - 180f) / 180f);
+
+                var color = mat.color;
+                color.a = percent;
+                mat.color = color;
+
                 angle += angleOffset;
             }
         }

@@ -7,15 +7,18 @@ namespace TMI
     public class Move : State
     {
         private MonsterMove mm;
+        private Renderer Rder;
 
         private void Awake()
         {
             mm = GetComponent<MonsterMove>();
+            Rder = GetComponent<Renderer>();
             enabled = false;
         }
 
         private void OnEnable()
         {
+            Rder.enabled = true;
             mm.enabled = true;
             mm.navMeshAgent.enabled = true;
             mm.NavOnOff(false);

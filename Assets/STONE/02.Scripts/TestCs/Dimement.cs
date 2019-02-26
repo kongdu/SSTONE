@@ -14,18 +14,9 @@ namespace TMI
             //Debug.Log("Dimement");
         }
 
-        private Vector3 pos = new Vector3(99, 99, 99);
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pos, 3);
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
-            pos = collision.contacts[0].point;
-
+            Debug.Log("hit");
             var hit = collision.collider.GetComponent<Hittable>();
             if (hit == null)
                 return;

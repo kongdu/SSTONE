@@ -17,10 +17,10 @@ TagManager:
   - 
   - PostProcessing
   - Monster
-  - hittable
-  - 
-  - 
-  - 
+  - Hittable
+  - Stone
+  - Player
+  - Environment
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Canvas
+    uniqueID: 4266421595
     locked: 0

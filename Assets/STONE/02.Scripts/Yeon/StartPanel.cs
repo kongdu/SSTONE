@@ -11,6 +11,11 @@ namespace TMI
     {
         public void OnHitPanel()
         {
+            Invoke("Next", 0.5f);
+        }
+
+        private void Next()
+        {
             GameManager.Instance.gameStartEnd?.Invoke();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace TMI
@@ -28,13 +29,18 @@ namespace TMI
             {
                 if (IsLive)
                     hp = value;
-                UIManager.Instance.PlayerHpText.text = hp.ToString();
+                UIManager.Instance.hpBar.ShowHpBar(hp / (float)maxhp);
             }
+        }
+
+        private void Awake()
+        {
+            PlayerInfoReset();
         }
 
         public void PlayerInfoReset()
         {
-            maxhp = 10; //예비수치 10
+            maxhp = 10000;
             Hp = maxhp;
         }
 

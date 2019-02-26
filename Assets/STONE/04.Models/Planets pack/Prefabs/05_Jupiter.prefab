@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3346398337507413298}
   - component: {fileID: 1660682312011065231}
   - component: {fileID: 6415707540334355380}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 05_Jupiter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

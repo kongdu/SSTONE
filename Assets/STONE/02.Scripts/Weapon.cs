@@ -38,7 +38,6 @@ namespace TMI
             StateChange(WeaponState.IDLE);
             stoneSelect = FindObjectOfType<StoneSelectUI>().SelectedStone;
             projectile = stoneSelect.GetComponent<StoneBase>();
-            projectile.GetComponent<Collider>().enabled = true;
 
             RightController.ControllerPress += SlingReload;
         }
@@ -97,6 +96,7 @@ namespace TMI
         public void StateAttack()
         {
             StateChange(WeaponState.ATTACK);
+            projectile.GetComponent<Collider>().enabled = true;
 
             joint.tolerance = 0.02f;
 

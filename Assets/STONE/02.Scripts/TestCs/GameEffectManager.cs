@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using System;
 
 namespace TMI
 {
@@ -11,14 +10,7 @@ namespace TMI
         public Collider[] FindRangeObj(Collision cols, float radius)
         {
             var contactsPos = cols.contacts[0].point;
-            var finds = Physics.OverlapSphere
-                (
-                    contactsPos,
-                    radius,
-                    1 << LayerMask.NameToLayer("hittable")
-                    );
-
-            return finds;
+            return Physics.OverlapSphere(contactsPos, radius, LayerMask.GetMask("Hittable"));
         }
 
         public IEnumerator LaserEffect(Transform tr)

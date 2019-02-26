@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 928623100723804630}
   - component: {fileID: 7247871637365909611}
   - component: {fileID: 1324849077345382240}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 04_Pluto
   m_TagString: Untagged
   m_Icon: {fileID: 0}

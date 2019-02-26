@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5647541427443440249}
   - component: {fileID: 8269603436893380976}
   - component: {fileID: 6884107065469173997}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 02_Neptune
   m_TagString: Untagged
   m_Icon: {fileID: 0}
