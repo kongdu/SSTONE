@@ -9,27 +9,15 @@ namespace TMI
         private void Awake()
         {
             deadEffecter = GetComponent<DeadEffecter>();
-            deadEffecter.CompleteEffect += Exit;
             deadEffecter.CompleteEffect += EndSequence;
             enabled = false;
         }
 
-        public override void Enter()
         private void OnEnable()
         {
-            Debug.Log("난 죽었다");
-
-            //if (TMI.StoneBase.type == TMI.StoneBase.StoneType.Dimement)
-            StartCoroutine(deadEffecter.DimementEffect());
-            //else
-            //{
-            //    StartCoroutine(TMI.GameEffectManager.Instance.LaserEffect(transform));
-            //    Debug.Log("디멘터를 못찾았음");
-            //}
             deadEffecter.PlayDead();
         }
 
-        public override void Exit()
         //public override void Enter()
         //{
         //    Debug.Log("난 죽었다");

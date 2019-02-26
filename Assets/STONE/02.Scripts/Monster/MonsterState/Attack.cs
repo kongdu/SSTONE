@@ -20,7 +20,6 @@ namespace TMI
             GetComponent<StateMachine>().ChangeState(() => GetComponent<Dead>());
         }
 
-        public override void Enter()
         private void OnEnable()
         {
             Debug.Log("어택상태로왓다");

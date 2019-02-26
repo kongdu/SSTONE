@@ -9,20 +9,17 @@ namespace TMI
     {
         public event Action CompleteEffect = () => { };
 
-        private ParticleSystem ps;
-        private Renderer renderer;
+        private new ParticleSystem particleSystem;
+        private new Renderer renderer;
 
         private void Awake()
         {
-            ps = transform.GetChild(0).GetComponent<ParticleSystem>();
             particleSystem = transform.GetChild(2).GetComponent<ParticleSystem>();
             renderer = GetComponent<Renderer>();
         }
 
         public IEnumerator DimementEffect()
         {
-            ps.gameObject.SetActive(true);
-            ps.Play();
             particleSystem.gameObject.SetActive(true);
             particleSystem.Play();
             StoneBase.DeadEvent?.Invoke();
@@ -32,7 +29,6 @@ namespace TMI
 
         public void PlayDead()
         {
-            StartCoroutine(DeadMotion(ps.gameObject));
             StartCoroutine(DeadMotion(particleSystem.gameObject));
         }
 
