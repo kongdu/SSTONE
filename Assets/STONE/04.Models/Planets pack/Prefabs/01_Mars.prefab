@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 3374938}
   - component: {fileID: 2374838}
   - component: {fileID: 13249861109556897}
-  - component: {fileID: 5558874951630910116}
   - component: {fileID: 9072780334326839939}
+  - component: {fileID: 1218841438899031538}
+  - component: {fileID: 2486379913110672495}
   m_Layer: 11
   m_Name: 01_Mars
   m_TagString: Untagged
@@ -96,19 +97,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &5558874951630910116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd2cbd5b1c2f614b81c52d36c5dabfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rid: {fileID: 13249861109556897}
 --- !u!136 &9072780334326839939
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -123,3 +111,40 @@ CapsuleCollider:
   m_Height: 0.8923241
   m_Direction: 1
   m_Center: {x: 0.0006426126, y: -0.0014934391, z: 0}
+--- !u!114 &1218841438899031538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cba22d5d90914443be063278c1b9317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rid: {fileID: 0}
+--- !u!114 &2486379913110672495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982a5b4aebff5b84d866fff1c71bf3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserBeamVaccume: {fileID: 6278441791512151093, guid: e9bdb13b2ff69ff4b86a1fdede967189,
+    type: 3}
+  beamStart: {fileID: 107164, guid: 34ed30a4f8c117e41b1a06f361f17e74, type: 3}
+  beamCube: {fileID: 7797039037214380050, guid: 7d0e86676e3a1f64f92d42298468d2a3,
+    type: 3}
+  beamEnd: {fileID: 125134, guid: 17a39c2bf6a421e4fbfc2d6df553078b, type: 3}
+  vaccumeWaitingTime: 1
+  beamBeginOffset: 1
+  beamEndOffset: 1
+  beamMaxDistance: 150
+  laserBeamHitRadius: 3
+  textureLengthScale: 3

@@ -5,26 +5,28 @@ namespace TMI
 {
     public enum WeaponState { IDLE, LOAD, ATTACK }
 
-    //1. 발사 이벤트 방향벡터 구함구하고 갱신.
+    // 1. 발사 이벤트 방향벡터 구하고 갱신
     public class Weapon : MonoBehaviour
     {
         public Transform pivot;
-
         public SpringJoint joint;
 
+        [Tooltip("확인용으로 일단 퍼블릭")]
+        public GameObject stoneSelect;
+
+        [Tooltip("확인용으로 일단 퍼블릭")]
         public StoneBase projectile;
+
+        public float power = 3f;
+
+        private Transform rightTr;
 
         [SerializeField]
         private WeaponState state = WeaponState.IDLE;
 
-        private Transform rightTr;
-
-        public GameObject stoneSelect;
-
         public WeaponState State
         {
             get => state;
-
             set => state = value;
         }
 
@@ -35,7 +37,8 @@ namespace TMI
 
         public void StoneLoad()
         {
-            StateChange(WeaponState.IDLE);
+            State = WeaponState.IDLE;
+
             stoneSelect = FindObjectOfType<StoneSelectUI>().SelectedStone;
             projectile = stoneSelect.GetComponent<StoneBase>();
 
@@ -44,66 +47,54 @@ namespace TMI
 
         private void SlingReload()
         {
-            StateChange(WeaponState.LOAD);
+            State = WeaponState.LOAD;
+            RightController.ControllerPressUp += StateAttack;
+
             var pose = VivePose.GetPoseEx(HandRole.RightHand, rightTr.transform);
             stoneSelect.transform.position = pose.pos;
             // Debug.Log("장전");
 
             var slingres = CalcDirNPower(stoneSelect.transform.position, joint.transform.position);
-            if (slingres.Item2 <= 0.2f)
+            if (slingres.power <= 0.2f)
             {
-                joint.tolerance = 3;
-
                 var res = CalcDirNPower(pivot.position, projectile.transform.position);
-                Directioncalculation(res);
+                projectile.stoneInfo = new StoneInfo(res.dir, res.power);
 
+                joint.tolerance = 3f;
                 joint.transform.LookAt(stoneSelect.transform);
-
                 joint.transform.rotation = Quaternion.Euler(Vector3.zero);
-
                 joint.transform.position = pose.pos;
-
-                RightController.ControllerPressUp += StateAttack;
             }
             else
             {
+                projectile.rb.constraints = RigidbodyConstraints.None;
+
                 joint.tolerance = 0.02f;
-                projectile.rid.constraints = RigidbodyConstraints.None;
-                RightController.ControllerPressUp -= StateAttack;
+
+                //RightController.ControllerPressUp -= StateAttack;
             }
-        }
-
-        public (Vector3, float) CalcDirNPower(Vector3 pos1, Vector3 pos2)
-        {
-            var dir = pos1 - pos2;
-            var power = dir.magnitude;
-            dir.Normalize();
-            return (dir, power);
-        }
-
-        public void Directioncalculation((Vector3 dir, float power) info)
-        {
-            projectile.stoneInfo = new StoneInfo(info.dir, info.power);
-            //projectile.stoneInfo.dir = info.dir;
-            //projectile.stoneInfo.power = info.power;
-        }
-
-        private void StateChange(WeaponState state)
-        {
-            this.state = state;
         }
 
         public void StateAttack()
         {
-            StateChange(WeaponState.ATTACK);
+            State = WeaponState.ATTACK;
+            RightController.ControllerPressUp -= StateAttack;
+
             projectile.GetComponent<Collider>().enabled = true;
+            projectile.Shot();
 
             joint.tolerance = 0.02f;
 
-            projectile.Enter(StoneBase.type);
-
             RightController.ControllerPress -= SlingReload;
             RightController.ControllerPressUp -= StateAttack;
+        }
+
+        public (Vector3 dir, float power) CalcDirNPower(Vector3 pos1, Vector3 pos2)
+        {
+            var dir = pos1 - pos2;
+            var power = dir.magnitude * this.power;
+            dir.Normalize();
+            return (dir, power);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace TMI
 
         public void PlayerInfoReset()
         {
-            maxhp = 10000;
+            maxhp = 5000;
             Hp = maxhp;
         }
 
@@ -61,7 +61,6 @@ namespace TMI
             }
             else
             {
-                StoneBase.type = StoneBase.StoneType.None;
                 hit.OnHit();
                 Hittable();
             }

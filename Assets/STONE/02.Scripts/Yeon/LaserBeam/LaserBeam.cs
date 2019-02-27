@@ -27,14 +27,15 @@ namespace TMI
 
         private void Awake()
         {
-            beamStart = Instantiate(beamStart, transform.position, transform.rotation, transform) as GameObject;
-            beamCube = Instantiate(beamCube, transform.position, transform.rotation, transform) as GameObject;
-            beamEnd = Instantiate(beamEnd, transform.position, transform.rotation, transform) as GameObject;
-            laserBeamVaccume = Instantiate(laserBeamVaccume, transform.position, Quaternion.identity, transform) as GameObject;
+            beamStart = Instantiate(beamStart, transform.position, transform.rotation) as GameObject;
+            beamCube = Instantiate(beamCube, transform.position, transform.rotation) as GameObject;
+            beamEnd = Instantiate(beamEnd, transform.position, transform.rotation) as GameObject;
+            laserBeamVaccume = Instantiate(laserBeamVaccume, transform.position, Quaternion.identity) as GameObject;
 
             prefabActiveSwitch(false);
         }
 
+        /*
         private void OnEnable()
         {
             ViveController.OnPressDownTrigger_RightHand += ShootLaserBeam;
@@ -44,8 +45,9 @@ namespace TMI
         {
             ViveController.OnPressDownTrigger_RightHand -= ShootLaserBeam;
         }
+        */
 
-        private void ShootLaserBeam()
+        public void ShootLaserBeam()
         {
             SettingLaserBeam(transform.position, transform.forward);
             SettingVaccume(transform.position, transform.forward);

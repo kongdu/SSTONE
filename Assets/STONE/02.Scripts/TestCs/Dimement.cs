@@ -6,10 +6,9 @@ namespace TMI
     {
         private float radius = 2.0f;
 
-        public override void Enter(StoneType type)
+        public override void Shot()
         {
-            type = StoneType.Dimement;
-            base.Enter(type);
+            base.Shot();
 
             //Debug.Log("Dimement");
         }
