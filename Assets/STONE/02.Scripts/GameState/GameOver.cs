@@ -12,8 +12,6 @@ namespace TMI
             gmr.player.state = Player.State.Die;
         }
 
-        private int count = 0;
-
         public override void Enter()
         {
             var allMonsters = gmr.GetComponent<ObjPoolManager>();

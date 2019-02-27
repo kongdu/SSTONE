@@ -7,19 +7,21 @@ namespace TMI
     public class Attack : State
     {
         private Attacker attackMove;
+        private Hittable playerHittable;
         public Player pl;
 
         private void Awake()
         {
             attackMove = GetComponent<Attacker>();
             pl = FindObjectOfType<Player>();
+            playerHittable = pl.GetComponent<Hittable>();
             attackMove.AttackEnd += SomethingHappen;
             enabled = false;
         }
 
         public override void SomethingHappen()
         {
-            pl.Hittable();
+            playerHittable.OnHit();
             GetComponent<StateMachine>().ChangeState(() => GetComponent<Dead>());
         }
 
