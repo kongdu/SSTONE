@@ -49,6 +49,14 @@ namespace TMI
             return Hp -= 1;
         }
 
+        private void Update()
+        {
+            if (IsDied)
+            {
+                DieBegin?.Invoke();
+            }
+        }
+
         private void OnCollisionEnter(Collision other)
         {
             var hit = other.transform.GetComponent<Hittable>();

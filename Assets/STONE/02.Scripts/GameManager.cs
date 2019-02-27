@@ -28,6 +28,7 @@ namespace TMI
         {
             gameMgr = this;
             player = FindObjectOfType<Player>();
+            player.DieBegin += () => ChangeState(GameState.End);
             ChangeState(GameState.Waiting);
         }
 

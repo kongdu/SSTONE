@@ -16,6 +16,8 @@ namespace TMI
         private void OnEnable()
         {
             deadEffecter.PlayDead();
+            if (TMI.StoneBase.type == TMI.StoneBase.StoneType.Dimement)
+                StartCoroutine(deadEffecter.DimementEffect());
         }
 
         //public override void Enter()

@@ -61,7 +61,10 @@ namespace TMI
         /// <param name="onoff">true=꺼짐,false=켜짐</param>
         public void NavOnOff(bool onoff)
         {
-            navMeshAgent.isStopped = onoff;
+            if (navMeshAgent.enabled == true)
+            {
+                navMeshAgent.isStopped = onoff;
+            }
         }
 
         private struct LaunchData

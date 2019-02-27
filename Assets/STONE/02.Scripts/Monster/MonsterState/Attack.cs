@@ -7,16 +7,19 @@ namespace TMI
     public class Attack : State
     {
         private Attacker attackMove;
+        public Player pl;
 
         private void Awake()
         {
             attackMove = GetComponent<Attacker>();
+            pl = GameObject.Find("Camera").GetComponent<Player>();
             attackMove.AttackEnd += SomethingHappen;
             enabled = false;
         }
 
         public override void SomethingHappen()
         {
+            pl.Hittable();
             GetComponent<StateMachine>().ChangeState(() => GetComponent<Dead>());
         }
 

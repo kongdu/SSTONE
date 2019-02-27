@@ -30,7 +30,7 @@ namespace TMI
         /// pivot 기준으로 최소 거리 ~ 최대 거리 사이에 무작위로 위치 생성
         /// </summary>
         /// <returns>생성된 위치</returns>
-        public Vector3 FindFarPoint(Vector3 pivot, float minDistance = 80f, float maxDistance = 99f)
+        public Vector3 FindFarPoint(Vector3 pivot, float minDistance = 90f, float maxDistance = 110f)
         {
             float distance = Random.Range(minDistance, maxDistance);
             float angle = Random.Range(0f, 360f);

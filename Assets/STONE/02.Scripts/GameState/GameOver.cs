@@ -11,8 +11,13 @@ namespace TMI
 
         public override void Enter()
         {
+            var Ms = gmr.GetComponent<ObjPoolManager>();
+            var As = gmr.GetComponent<AudioSource>();
+            Ms.monsters.gameObject.SetActive(false);
+            As.Stop();
+
             Debug.Log("게임종료방");
-            // 업적? 을 보여줘야한다면 여기서 보여줘도 될거같다.
+            // 델리게이트 체인을 보여줘야한다면 여기서 보여줘도 될거같다.
             gmr.gameStartEnd += gmr.GameStart;
             gmr.ResetInfo += gmr.player.PlayerInfoReset;
         }

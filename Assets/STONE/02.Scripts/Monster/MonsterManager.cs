@@ -13,7 +13,7 @@ namespace TMI
             //Debug.unityLogger.logEnabled = false;
         }
 
-        private void Start()
+        public void GameStart()
         {
             MonsterGen(500, 0.5f);
         }
