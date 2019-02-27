@@ -40,13 +40,21 @@ namespace TMI
 
         public void PlayerInfoReset()
         {
-            maxhp = 5000;
+            maxhp = 5;
             Hp = maxhp;
         }
 
         public int Hittable()
         {
             return Hp -= 1;
+        }
+
+        private void Update()
+        {
+            if (IsDied)
+            {
+                DieBegin?.Invoke();
+            }
         }
 
         private void OnCollisionEnter(Collision other)

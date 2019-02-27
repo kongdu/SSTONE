@@ -24,5 +24,15 @@ namespace TMI
         {
             sm.ChangeState(() => GetComponent<Dead>());
         }
+
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    Debug.Log("1");
+        //    if (collision.gameObject.tag == "Camera")
+        //    {
+        //        Debug.Log("2");
+        //        collision.gameObject.GetComponent<Player>().Hittable();
+        //    }
+        //}
     }
 }

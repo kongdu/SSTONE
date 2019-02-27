@@ -5,9 +5,13 @@ namespace TMI
 {
     public class UIManager : Singleton<UIManager>
     {
-        //SY가 만듦
+        // SY가 만듦
         public StartPanel startPanel;
 
         public HpBar hpBar;
+
+        public ScoreUI scoreUI;
+
+        public DamageUI damageUI;
     }
 }
