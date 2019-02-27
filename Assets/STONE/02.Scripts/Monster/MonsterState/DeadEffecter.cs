@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using HTC.UnityPlugin.Vive;
 
 namespace TMI
 {
@@ -44,6 +45,12 @@ namespace TMI
 
         private IEnumerator DeadMotion(GameObject ps)
         {
+            for (int i = 0; i < 100; ++i)
+            {
+                ViveInput.TriggerHapticPulseEx(HandRole.LeftHand);
+                ViveInput.TriggerHapticPulseEx(HandRole.RightHand);
+            }
+
             particleSystem.gameObject.SetActive(true);
             particleSystem.Play();
             deadSound.Play();

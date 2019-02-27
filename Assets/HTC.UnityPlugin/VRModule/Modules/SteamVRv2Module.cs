@@ -1,6 +1,7 @@
 ﻿//========= Copyright 2016-2019, HTC Corporation. All rights reserved. ===========
 
 #if VIU_STEAMVR
+
 using HTC.UnityPlugin.Utility;
 using HTC.UnityPlugin.Vive;
 using System.Text;
@@ -10,8 +11,11 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Collections;
+
 #if UNITY_2017_2_OR_NEWER
+
 using UnityEngine.XR;
+
 #elif UNITY_5_4_OR_NEWER
 using XRSettings = UnityEngine.VR.VRSettings;
 #endif
@@ -22,6 +26,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
     public sealed partial class SteamVRModule : VRModule.ModuleBase
     {
 #if VIU_STEAMVR_2_0_0_OR_NEWER
+
         public class ActionArray<T> where T : struct
         {
             private static readonly EnumUtils.EnumDisplayInfo s_enumInfo;
@@ -62,7 +67,6 @@ namespace HTC.UnityPlugin.VRModuleManagement
                 m_aliases = new string[Len];
                 m_paths = new string[Len];
                 m_handles = new ulong[Len];
-
             }
 
             public string DataType { get { return m_dataType; } }
@@ -70,13 +74,34 @@ namespace HTC.UnityPlugin.VRModuleManagement
             public string CurrentAlias { get { return m_aliases[m_iterator]; } }
             public string CurrentPath { get { return m_paths[m_iterator]; } }
             public ulong CurrentHandle { get { return m_handles[m_iterator]; } }
-            public void MoveNext() { ++m_iterator; }
-            public bool IsCurrentValid() { return m_iterator >= 0 && m_iterator < Len; }
-            public void Reset() { m_iterator = 0; }
+
+            public void MoveNext()
+            {
+                ++m_iterator;
+            }
+
+            public bool IsCurrentValid()
+            {
+                return m_iterator >= 0 && m_iterator < Len;
+            }
+
+            public void Reset()
+            {
+                m_iterator = 0;
+            }
 
             public ulong CurrentOrigin { get { return s_actionOrigins[m_originIterator]; } }
-            public void MoveNextOrigin() { ++m_originIterator; }
-            public bool IsCurrentOriginValid() { return m_originIterator >= 0 && m_originIterator < s_actionOrigins.Length && s_actionOrigins[m_originIterator] != OpenVR.k_ulInvalidInputValueHandle; }
+
+            public void MoveNextOrigin()
+            {
+                ++m_originIterator;
+            }
+
+            public bool IsCurrentOriginValid()
+            {
+                return m_originIterator >= 0 && m_originIterator < s_actionOrigins.Length && s_actionOrigins[m_originIterator] != OpenVR.k_ulInvalidInputValueHandle;
+            }
+
             public void ResetOrigins(CVRInput vrInput)
             {
                 if (CurrentHandle == OpenVR.k_ulInvalidActionHandle)
@@ -286,7 +311,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
 
             SteamVR.Initialize();
 #if VIU_STEAMVR_2_1_0_OR_NEWER
-            SteamVR_ActionSet_Manager.UpdateActionSetsState();
+            SteamVR_ActionSet_Manager.UpdateActionStates();
 #else
             SteamVR_ActionSet.UpdateActionSetsState();
 #endif
@@ -369,7 +394,6 @@ namespace HTC.UnityPlugin.VRModuleManagement
             m_originInfoSize = (uint)Marshal.SizeOf(new InputOriginInfo_t());
             m_activeActionSetSize = (uint)Marshal.SizeOf(new VRActiveActionSet_t());
 
-
             m_poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
             m_gamePoses = new TrackedDevicePose_t[0];
             m_originDataCache = new Dictionary<ulong, OriginData>((int)OpenVR.k_unMaxActionOriginCount);
@@ -378,8 +402,8 @@ namespace HTC.UnityPlugin.VRModuleManagement
 
             m_activeActionSets = new VRActiveActionSet_t[1] { new VRActiveActionSet_t() { ulActionSet = s_actionSetHandle, } };
 
-            SteamVR_Input.OnNonVisualActionsUpdated += UpdateDeviceInput;
-            SteamVR_Input.OnPosesUpdated += UpdateDevicePose;
+            SteamVR_Input.onNonVisualActionsUpdated += UpdateDeviceInput;
+            SteamVR_Input.onPosesUpdated += UpdateDevicePose;
 
             s_devicePathHandles = new ulong[OpenVR.k_unMaxTrackedDeviceCount];
             EnsureDeviceStateLength(OpenVR.k_unMaxTrackedDeviceCount);
@@ -400,8 +424,8 @@ namespace HTC.UnityPlugin.VRModuleManagement
             SteamVR_Events.InputFocus.RemoveListener(OnInputFocus);
             SteamVR_Events.System(EVREventType.VREvent_TrackedDeviceRoleChanged).RemoveListener(OnTrackedDeviceRoleChanged);
 
-            SteamVR_Input.OnNonVisualActionsUpdated -= UpdateDeviceInput;
-            SteamVR_Input.OnPosesUpdated -= UpdateDevicePose;
+            SteamVR_Input.onNonVisualActionsUpdated -= UpdateDeviceInput;
+            SteamVR_Input.onPosesUpdated -= UpdateDevicePose;
 
             trackingSpace = m_prevTrackingSpace;
 
@@ -573,6 +597,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
                 case VRModuleTrackingSpaceType.RoomScale:
                     trackingSpace = ETrackingUniverseOrigin.TrackingUniverseStanding;
                     break;
+
                 case VRModuleTrackingSpaceType.Stationary:
                     trackingSpace = ETrackingUniverseOrigin.TrackingUniverseSeated;
                     break;
@@ -621,7 +646,10 @@ namespace HTC.UnityPlugin.VRModuleManagement
             InvokeInputFocusEvent(value);
         }
 
-        public override bool HasInputFocus() { return m_hasInputFocus; }
+        public override bool HasInputFocus()
+        {
+            return m_hasInputFocus;
+        }
 
         private void OnTrackedDeviceRoleChanged(VREvent_t arg)
         {
@@ -642,6 +670,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
         }
 
         private StringBuilder m_sb;
+
         private string QueryDeviceStringProperty(CVRSystem system, uint deviceIndex, ETrackedDeviceProperty prop)
         {
             var error = default(ETrackedPropertyError);
@@ -682,6 +711,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
                 }
             }
         }
+
 #endif
     }
 }

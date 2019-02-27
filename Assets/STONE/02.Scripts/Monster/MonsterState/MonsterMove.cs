@@ -61,7 +61,10 @@ namespace TMI
         /// <param name="onoff">true=꺼짐,false=켜짐</param>
         public void NavOnOff(bool onoff)
         {
-            navMeshAgent.isStopped = onoff;
+            if (gameObject.activeInHierarchy &&
+                navMeshAgent != null &&
+                navMeshAgent.enabled)
+                navMeshAgent.isStopped = onoff;
         }
 
         private struct LaunchData
@@ -81,8 +84,8 @@ namespace TMI
             float h = 20;
             float gravity = 9f;
 
-            float displacementY = destination.y - transform.position.y;
-            Vector3 displacementXZ = new Vector3(destination.x - transform.position.x, 0, destination.z - transform.position.z);
+            float displacementY = destination.y - transform.localPosition.y;
+            Vector3 displacementXZ = new Vector3(destination.x - transform.localPosition.x, 0, destination.z - transform.localPosition.z);
             float time = (Mathf.Sqrt(-2 * h / gravity) + Mathf.Sqrt(2 * (displacementY - h) / gravity));
             Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * h);
             Vector3 velocityXZ = displacementXZ / time;

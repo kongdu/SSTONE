@@ -22,7 +22,6 @@ namespace TMI
 
         private void OnEnable()
         {
-            Debug.Log("어택상태로왓다");
             attackMove.enabled = true;
         }
 

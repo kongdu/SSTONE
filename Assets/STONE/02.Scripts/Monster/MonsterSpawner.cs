@@ -21,6 +21,8 @@ namespace TMI
             {
                 var monster = ObjPoolManager.instance.monsterPool.Pop();
                 monster.transform.position = FindFarPoint(this.transform.position);
+                var size = Random.Range(1.5f, 5f);
+                monster.transform.localScale = new Vector3(size, size, size);
                 monster.SetActive(true);
                 yield return new WaitForSeconds(delay);
             }

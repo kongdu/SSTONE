@@ -18,18 +18,20 @@ namespace TMI
     public class StoneBase : MonoBehaviour
     {
         public StoneInfo stoneInfo;
+        public bool IsShooting { get; private set; } = false;
 
-        [NonSerialized]
-        public Rigidbody rb;
+        [NonSerialized] public Rigidbody rb;
+        [NonSerialized] public MeshRenderer meshRenderer;
 
         public static Action DeadEvent = () => { };
 
         protected Vector3 pos;
         protected Weapon weapon;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody>();
+            meshRenderer = GetComponent<MeshRenderer>();
         }
 
         private void OnEnable()
@@ -39,16 +41,17 @@ namespace TMI
 
         public virtual void Shot()
         {
-            //rb.constraints = RigidbodyConstraints.None;
             rb.AddForce(stoneInfo.dir * stoneInfo.power, ForceMode.Impulse);
+
+            IsShooting = true;
         }
 
-        public virtual void ResetPos()
+        public virtual void ResetInfo()
         {
-            rb.GetComponent<Collider>().enabled = false;
-            rb.constraints = RigidbodyConstraints.FreezeAll;
             transform.localPosition = pos + Vector3.up * 2f;
-            RightController.ControllerPressUp -= weapon.StateAttack;
+            rb.velocity = Vector3.zero;
+
+            IsShooting = false;
         }
     }
 }

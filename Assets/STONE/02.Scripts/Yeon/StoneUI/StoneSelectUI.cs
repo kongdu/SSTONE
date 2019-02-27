@@ -12,8 +12,8 @@ namespace TMI
     public class StoneSelectUI : MonoBehaviour
     {
         public List<GameObject> stonePrefabs;
-        public List<Transform> stones;
-        public GameObject SelectedStone { get => stones[0].gameObject; }
+        public List<StoneBase> stones;
+        public StoneBase SelectedStone { get => stones[0]; }
         public float distance = 1f;
         public GameObject selectedCircle;
         private float angleOffset = 0f;
@@ -60,7 +60,7 @@ namespace TMI
             foreach (var item in stonePrefabs)
             {
                 GameObject stoneGO = Instantiate(item, transform.position, transform.rotation, transform);
-                stones.Add(stoneGO.transform);
+                stones.Add(stoneGO.GetComponent<StoneBase>());
             }
 
             MoveTo();
@@ -81,7 +81,7 @@ namespace TMI
 
         private void LoopStone(Func<int> GetRemoveIndex, Func<int> GetInsertIndex)
         {
-            Transform tmpStone = stones[GetRemoveIndex()];
+            var tmpStone = stones[GetRemoveIndex()];
             stones.RemoveAt(GetRemoveIndex());
             stones.Insert(GetInsertIndex(), tmpStone);
         }
@@ -102,20 +102,24 @@ namespace TMI
 
         private void MoveTo(float angle = 0f)
         {
-            foreach (var item in stones)
+            foreach (var stone in stones)
             {
-                item.localPosition = CalcPosition(angle, distance);
+                if (stone.IsShooting)
+                    continue;
+                stone.transform.localPosition = CalcPosition(angle, distance);
                 angle += angleOffset;
             }
         }
 
-        private void AlphaTo(float angle = 0f)
+        private void AlphaTo(float angle = 0.0f)
         {
-            foreach (var item in stones)
+            foreach (var stone in stones)
             {
-                var mat = item.GetComponent<Renderer>().material;
+                if (stone.IsShooting)
+                    continue;
 
-                var percent = (Mathf.Abs(angle - 180f) / 180f);
+                var mat = stone.GetComponent<Renderer>().material;
+                var percent = (Mathf.Abs(angle - 180.0f) / 180.0f);
 
                 var color = mat.color;
                 color.a = percent;

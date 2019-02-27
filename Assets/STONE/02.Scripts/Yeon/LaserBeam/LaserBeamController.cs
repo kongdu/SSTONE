@@ -10,38 +10,40 @@ namespace TMI
     public class LaserBeamController : StoneBase
     {
         public float resetDelay = 1f;
-        public float rendererOffDelay = 0.5f;
+        public float shotDelay = 0.1f;
 
         private LaserBeam laserBeam;
+        private StoneSelectUI stoneSelectUI;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             laserBeam = GetComponent<LaserBeam>();
-            rb = GetComponent<Rigidbody>();
+            stoneSelectUI = FindObjectOfType<StoneSelectUI>();
         }
 
         public override void Shot()
         {
-            laserBeam.ShootLaserBeam();
+            Debug.Log("Shot - DIR : " + stoneInfo.dir + "    POWER : " + stoneInfo.power);
 
             StopAllCoroutines();
-
-            StartCoroutine(RendererOffProcess());
-            StartCoroutine(ResetProcess());
+            StartCoroutine(ShotProcess());
         }
 
-        private IEnumerator RendererOffProcess()
+        private IEnumerator ShotProcess()
         {
-            yield return new WaitForSeconds(rendererOffDelay);
+            rb.AddForce(stoneInfo.dir * stoneInfo.power, ForceMode.Impulse);
+
+            yield return new WaitForSeconds(shotDelay);
+
             GetComponent<MeshRenderer>().enabled = false;
-        }
+            laserBeam.Shot(stoneInfo.dir);
+            ResetInfo();
 
-        private IEnumerator ResetProcess()
-        {
+            stoneSelectUI.MoveNext();
             yield return new WaitForSeconds(resetDelay);
 
             GetComponent<MeshRenderer>().enabled = true;
-            ResetPos();
         }
     }
 }

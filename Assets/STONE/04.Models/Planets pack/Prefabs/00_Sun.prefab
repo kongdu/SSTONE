@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 445726}
   - component: {fileID: 3347752}
   - component: {fileID: 2383544}
-  - component: {fileID: 1160380890531722551}
   - component: {fileID: 1834613392912138802}
-  - component: {fileID: 1878007704422723639}
+  - component: {fileID: 7648598042047723756}
+  - component: {fileID: 5845328266235834683}
   m_Layer: 11
   m_Name: 00_Sun
   m_TagString: Untagged
@@ -80,19 +80,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &1160380890531722551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 149674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c6fb68115d47f4a93d7d1c3199c15c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rid: {fileID: 1834613392912138802}
 --- !u!54 &1834613392912138802
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,22 +91,45 @@ Rigidbody:
   m_Mass: 5
   m_Drag: 2
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 112
   m_CollisionDetection: 0
---- !u!136 &1878007704422723639
-CapsuleCollider:
+--- !u!114 &7648598042047723756
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149674}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 0.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cba22d5d90914443be063278c1b9317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resetDelay: 1
+  shotDelay: 0.025
+--- !u!114 &5845328266235834683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982a5b4aebff5b84d866fff1c71bf3c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beamStart: {fileID: 107164, guid: 34ed30a4f8c117e41b1a06f361f17e74, type: 3}
+  beamCube: {fileID: 7797039037214380050, guid: 7d0e86676e3a1f64f92d42298468d2a3,
+    type: 3}
+  beamEnd: {fileID: 125134, guid: 17a39c2bf6a421e4fbfc2d6df553078b, type: 3}
+  waitingTime: 1
+  beamBeginOffset: 1
+  beamEndOffset: 1
+  beamMaxDistance: 150
+  laserBeamHitRadius: 3
+  textureLengthScale: 3
+  cleanerBeamRadius: 5

@@ -20,7 +20,7 @@ namespace TMI
             if (hit == null)
                 return;
 
-            ResetPos();
+            ResetInfo();
             var findobjs = GameEffectManager.Instance.FindRangeObj(collision, radius);
 
             foreach (var item in findobjs)

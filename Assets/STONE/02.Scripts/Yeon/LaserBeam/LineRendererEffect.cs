@@ -12,6 +12,7 @@ namespace TMI
     public class LineRendererEffect : MonoBehaviour
     {
         private LineRenderer line;
+
         public float textureScrollSpeed = 8f; //How fast the texture scrolls along the beam
 
         private void Awake()

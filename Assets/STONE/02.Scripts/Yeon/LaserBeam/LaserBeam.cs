@@ -7,14 +7,13 @@ namespace TMI
     public class LaserBeam : MonoBehaviour
     {
         [Header("Prefabs")]
-        public GameObject laserBeamVaccume;
-
         public GameObject beamStart;
+
         public GameObject beamCube;
         public GameObject beamEnd;
 
         [Header("Adjustable Variables")]
-        public float vaccumeWaitingTime = 1f;
+        public float waitingTime = 1f;
 
         public float beamBeginOffset = 1f;
         public float beamEndOffset = 1f; //How far from the raycast hit point the end effect is positioned
@@ -22,15 +21,13 @@ namespace TMI
         public float laserBeamHitRadius = 3f;
         public float textureLengthScale = 3; //Length of the beam texture
 
-        private float cleanerBeamRadius = 3f;
-        private float vaccumeBeamSpeed = 5f;
+        public float cleanerBeamRadius = 3f;
 
         private void Awake()
         {
             beamStart = Instantiate(beamStart, transform.position, transform.rotation) as GameObject;
             beamCube = Instantiate(beamCube, transform.position, transform.rotation) as GameObject;
             beamEnd = Instantiate(beamEnd, transform.position, transform.rotation) as GameObject;
-            laserBeamVaccume = Instantiate(laserBeamVaccume, transform.position, Quaternion.identity) as GameObject;
 
             prefabActiveSwitch(false);
         }
@@ -47,13 +44,26 @@ namespace TMI
         }
         */
 
-        public void ShootLaserBeam()
+        public void Shot(Vector3 dir)
         {
-            SettingLaserBeam(transform.position, transform.forward);
-            SettingVaccume(transform.position, transform.forward);
+            SettingLaserBeam(transform.position, dir);
+            SettingVaccume(transform.position, dir);
+            SphereCast(dir);
 
             StopAllCoroutines();
             StartCoroutine(BlinkProcess());
+        }
+
+        private void SphereCast(Vector3 dir)
+        {
+            var hits = Physics.SphereCastAll(beamStart.transform.position, cleanerBeamRadius, dir * beamMaxDistance, LayerMask.GetMask("Hittable"));
+
+            foreach (var item in hits)
+            {
+                var hit = item.transform.GetComponent<Hittable>();
+
+                hit?.OnHit();
+            }
         }
 
         /// <summary>
@@ -88,13 +98,11 @@ namespace TMI
             beamStart.transform.position = start;
             beamCube.transform.position = start;
             beamEnd.transform.position = end;
-            laserBeamVaccume.transform.position = start + (dir.normalized * beamBeginOffset);
 
             // 방향
             beamStart.transform.LookAt(beamEnd.transform.position);
             beamCube.transform.LookAt(beamEnd.transform.position);
             beamEnd.transform.LookAt(beamStart.transform.position);
-            laserBeamVaccume.transform.LookAt(beamEnd.transform.position);
 
             // 크기
             Vector3 beamScale = beamCube.transform.localScale;
@@ -113,12 +121,6 @@ namespace TMI
             Vector3 end = FindEndPoint(start, dir);
             float distance = Vector3.Distance(start, end);
 
-            // 위치
-            laserBeamVaccume.transform.position = start;
-
-            // 방향
-            laserBeamVaccume.transform.LookAt(beamEnd.transform.position);
-
             // 크기
             Vector3 beamScale = beamCube.transform.localScale;
             beamScale.z = distance;
@@ -132,7 +134,7 @@ namespace TMI
         private IEnumerator BlinkProcess()
         {
             prefabActiveSwitch(true);
-            yield return new WaitForSeconds(vaccumeWaitingTime);
+            yield return new WaitForSeconds(waitingTime);
             prefabActiveSwitch(false);
         }
 
@@ -147,14 +149,12 @@ namespace TMI
                 beamStart.SetActive(true);
                 beamCube.SetActive(true);
                 beamEnd.SetActive(true);
-                laserBeamVaccume.SetActive(true);
             }
             else
             {
                 beamStart.SetActive(false);
                 beamCube.SetActive(false);
                 beamEnd.SetActive(false);
-                laserBeamVaccume.SetActive(false);
             }
         }
     }

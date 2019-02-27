@@ -16,7 +16,7 @@ namespace TMI
             if (hit == null)
                 return;
 
-            ResetPos();
+            ResetInfo();
 
             hit.OnHit();
         }
