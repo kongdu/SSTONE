@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TMI
 {
-    public class LaserBeam : MonoBehaviour
+    public class LasetInfo : Singleton<LasetInfo>
     {
         [Header("Prefabs")]
         public GameObject laserBeamVaccume;
@@ -11,6 +11,8 @@ namespace TMI
         public GameObject beamStart;
         public GameObject beamCube;
         public GameObject beamEnd;
+
+        public Transform pivot;
 
         [Header("Adjustable Variables")]
         public float vaccumeWaitingTime = 1f;
@@ -24,32 +26,26 @@ namespace TMI
         private float cleanerBeamRadius = 3f;
         private float vaccumeBeamSpeed = 5f;
 
-        private void Awake()
+        private void OnEnable()
         {
-            beamStart = Instantiate(beamStart, transform.position, transform.rotation) as GameObject;
-            beamCube = Instantiate(beamCube, transform.position, transform.rotation) as GameObject;
-            beamEnd = Instantiate(beamEnd, transform.position, transform.rotation) as GameObject;
-            laserBeamVaccume = Instantiate(laserBeamVaccume, transform.position, Quaternion.identity) as GameObject;
+            LaserBeamSetting();
+        }
+
+        public void LaserBeamSetting()
+        {
+            beamStart = Instantiate(beamStart, transform.position, transform.rotation, transform) as GameObject;
+            beamCube = Instantiate(beamCube, transform.position, transform.rotation, transform) as GameObject;
+
+            beamEnd = Instantiate(beamEnd, transform.position, transform.rotation, transform) as GameObject;
+            laserBeamVaccume = Instantiate(laserBeamVaccume, transform.position, Quaternion.identity, transform) as GameObject;
 
             prefabActiveSwitch(false);
         }
 
-        /*
-        private void OnEnable()
-        {
-            ViveController.OnPressDownTrigger_RightHand += ShootLaserBeam;
-        }
-
-        private void OnDisable()
-        {
-            ViveController.OnPressDownTrigger_RightHand -= ShootLaserBeam;
-        }
-        */
-
         public void ShootLaserBeam()
         {
-            SettingLaserBeam(transform.position, transform.forward);
-            SettingVaccume(transform.position, transform.forward);
+            SettingLaserBeam(pivot.position, pivot.forward);
+            SettingVaccume(pivot.position, pivot.forward);
 
             StopAllCoroutines();
             StartCoroutine(BlinkProcess());
@@ -139,22 +135,12 @@ namespace TMI
         /// 레이저빔 관련 프리팹 모두 켜거나 끄거나
         /// </summary>
         /// <param name="ON">True or False</param>
-        private void prefabActiveSwitch(bool ON)
+        public void prefabActiveSwitch(bool ON)
         {
-            if (ON)
-            {
-                beamStart.SetActive(true);
-                beamCube.SetActive(true);
-                beamEnd.SetActive(true);
-                laserBeamVaccume.SetActive(true);
-            }
-            else
-            {
-                beamStart.SetActive(false);
-                beamCube.SetActive(false);
-                beamEnd.SetActive(false);
-                laserBeamVaccume.SetActive(false);
-            }
+            beamStart.SetActive(ON);
+            beamCube.SetActive(ON);
+            beamEnd.SetActive(ON);
+            laserBeamVaccume.SetActive(ON);
         }
     }
 }

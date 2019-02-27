@@ -2,7 +2,7 @@
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    public static T instance = null;
+    private static T instance = null;
 
     public static T Instance
     {
