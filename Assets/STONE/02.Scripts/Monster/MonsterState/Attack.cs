@@ -12,7 +12,7 @@ namespace TMI
         private void Awake()
         {
             attackMove = GetComponent<Attacker>();
-            pl = GameObject.Find("Camera").GetComponent<Player>();
+            pl = FindObjectOfType<Player>();
             attackMove.AttackEnd += SomethingHappen;
             enabled = false;
         }

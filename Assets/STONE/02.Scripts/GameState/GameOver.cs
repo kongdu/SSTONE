@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace TMI
 {
@@ -9,15 +12,24 @@ namespace TMI
             gmr.player.state = Player.State.Die;
         }
 
+        private int count = 0;
+
         public override void Enter()
         {
-            var Ms = gmr.GetComponent<ObjPoolManager>();
-            var As = gmr.GetComponent<AudioSource>();
-            Ms.monsters.gameObject.SetActive(false);
-            As.Stop();
+            var allMonsters = gmr.GetComponent<ObjPoolManager>();
+            var allMonstersAudiosource = gmr.GetComponent<AudioSource>();
+
+            StateMachine[] d = allMonsters.monsters.GetComponentsInChildren<StateMachine>();
+            foreach (var i in d)
+            {
+                i.ChangeState(() => i.GetComponent<Dead>());
+            }
+            gmr.GetComponent<MonsterManager>().StopAllCoroutines();
+            allMonstersAudiosource.Stop();
 
             Debug.Log("게임종료방");
-            // 델리게이트 체인을 보여줘야한다면 여기서 보여줘도 될거같다.
+
+            // 델리게이트체인을 보여줘야한다면 여기서 보여줘도 될거같다.
             gmr.gameStartEnd += gmr.GameStart;
             gmr.ResetInfo += gmr.player.PlayerInfoReset;
         }

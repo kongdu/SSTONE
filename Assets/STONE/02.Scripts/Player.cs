@@ -40,7 +40,7 @@ namespace TMI
 
         public void PlayerInfoReset()
         {
-            maxhp = 5000;
+            maxhp = 5;
             Hp = maxhp;
         }
 

@@ -14,6 +14,7 @@ namespace TMI
             Debug.Log("게임시작");
             gmr.GetComponent<AudioSource>().Play();
             gmr.GetComponent<MonsterManager>().GameStart();
+            gmr.GetComponent<ObjPoolManager>().monsters.gameObject.SetActive(true);
             gmr.player.DieBegin += gmr.GameOver;
         }
 

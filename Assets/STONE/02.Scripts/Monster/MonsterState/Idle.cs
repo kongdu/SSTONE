@@ -13,6 +13,7 @@ namespace TMI
 
         public override void Enter()
         {
+            enabled = false;
             Debug.Log("아이들상태로진입");
         }
 
